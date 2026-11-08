@@ -80,8 +80,7 @@ body{
 .quick a .q-note{color:var(--dim);font-size:14px}
 
 /* ---------- 站点区块 ---------- */
-.hub{margin-top:22px}
-.sites{display:grid;grid-template-columns:1fr;gap:24px;margin-top:22px}
+.sites{display:grid;grid-template-columns:1fr;gap:26px;margin-top:22px}
 .panel{border-left:3px solid var(--acc,var(--paper));padding-left:14px}
 .panel--hub{--acc:var(--paper)}
 .panel--delta{--acc:var(--delta)}
@@ -163,12 +162,7 @@ body{
 .copy svg{width:18px;height:18px}
 
 /* ---------- 后台 ---------- */
-.admin{margin-top:28px;padding-top:22px;border-top:1px solid var(--line)}
-.admin .head-row{display:flex;flex-direction:column;gap:2px}
-.admin h2{font-size:21px;font-weight:700}
-.admin .sub{color:var(--dim);font-size:14px}
-.admin .entries{margin-top:8px}
-.admin .panel{border-left:3px solid var(--warn);padding-left:14px}
+.panel--admin{--acc:var(--warn)}
 .callout{
   margin-top:14px;
   padding:13px 14px;
@@ -240,15 +234,11 @@ footer{
   .hero .lede{font-size:16px}
   .quick{flex-direction:row;flex-wrap:wrap;gap:10px}
   .quick a{width:auto;justify-content:flex-start;gap:10px}
-  .sites{grid-template-columns:1fr 1fr;gap:40px;margin-top:32px}
-  .hub{margin-top:28px}
+  .sites{grid-template-columns:1fr 1fr;gap:34px 40px;margin-top:30px}
   .panel h2{font-size:26px}
   .panel-head .mark svg{width:26px;height:26px}
   .panel{padding-left:16px}
   .entry{padding:16px 0}
-  .admin{margin-top:34px;padding-top:26px}
-  .admin h2{font-size:22px}
-  .admin .head-row{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:14px}
   .notes{margin-top:34px;padding-top:26px}
   .notes h2{font-size:22px}
   .notes li{font-size:16px;grid-template-columns:1.4em minmax(0,1fr);gap:10px}
@@ -272,7 +262,9 @@ footer{
     </div>
   </header>
 
-  <section class="hub" aria-label="官网地址">
+  <section class="sites" aria-label="全部站点入口">
+
+    <!-- ===== 官网（本页） ===== -->
     <article class="panel panel--hub">
       <div class="panel-head">
         <span class="mark" aria-hidden="true">
@@ -306,9 +298,6 @@ footer{
         </li>
       </ul>
     </article>
-  </section>
-
-  <section class="sites" aria-label="两个站点">
 
     <!-- ===== 三角洲 ===== -->
     <article class="panel panel--delta">
@@ -399,14 +388,17 @@ footer{
         </li>
       </ul>
     </article>
-  </section>
 
-  <!-- ===== MC 后台 ===== -->
-  <section class="admin" aria-label="MC 官网管理后台">
-    <div class="panel">
-      <div class="head-row">
-        <h2>MC 官网管理后台</h2>
-        <p class="sub">登录后可修改网站上的文字、图片与内容</p>
+    <!-- ===== MC 后台 ===== -->
+    <article class="panel panel--admin">
+      <div class="panel-head">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4.5" y="10" width="15" height="9.5"/><path d="M8 10V7.2a4 4 0 0 1 8 0V10" stroke-width="1.4"/></svg>
+        </span>
+        <div>
+          <h2>MC 官网管理后台</h2>
+          <p class="sub">登录后可修改网站上的文字、图片与内容</p>
+        </div>
       </div>
       <ul class="entries">
         <li class="entry">
@@ -430,8 +422,8 @@ footer{
           </button>
         </li>
       </ul>
-    </div>
-    <div class="callout"><strong>要改网页内容？</strong> MC 后台可以修改网站上的内容，账号密码私我拿。</div>
+      <div class="callout"><strong>要改网页内容？</strong> MC 后台可以修改网站上的内容，账号密码私我拿。</div>
+    </article>
   </section>
 
   <!-- ===== 须知 ===== -->
