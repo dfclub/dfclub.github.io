@@ -63,6 +63,7 @@ body{
   max-width:34em;
 }
 .quick{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.hero .lede code{font-family:var(--mono);font-size:.94em;color:var(--paper)}
 .quick a{
   display:flex;align-items:center;justify-content:space-between;gap:12px;
   width:100%;
@@ -79,8 +80,10 @@ body{
 .quick a .q-note{color:var(--dim);font-size:14px}
 
 /* ---------- 站点区块 ---------- */
-.sites{display:grid;grid-template-columns:1fr;gap:24px;margin-top:26px}
+.hub{margin-top:22px}
+.sites{display:grid;grid-template-columns:1fr;gap:24px;margin-top:22px}
 .panel{border-left:3px solid var(--acc,var(--paper));padding-left:14px}
+.panel--hub{--acc:var(--paper)}
 .panel--delta{--acc:var(--delta)}
 .panel--mc{--acc:var(--mc)}
 .panel-head{display:flex;gap:10px;align-items:flex-start}
@@ -238,6 +241,7 @@ footer{
   .quick{flex-direction:row;flex-wrap:wrap;gap:10px}
   .quick a{width:auto;justify-content:flex-start;gap:10px}
   .sites{grid-template-columns:1fr 1fr;gap:40px;margin-top:32px}
+  .hub{margin-top:28px}
   .panel h2{font-size:26px}
   .panel-head .mark svg{width:26px;height:26px}
   .panel{padding-left:16px}
@@ -261,12 +265,48 @@ footer{
 
   <header class="hero">
     <h1>我们的官网</h1>
-    <p class="lede">三角洲与《我的世界》两个站点，以及 MC 官网后台的统一入口。两个主网址都在审核中，现在能打开的是下面标着「稳定」或「限时」的那几个。</p>
+    <p class="lede">这个页面本身也在换域名：<code>dfclub.eu.org</code> 审核通过后主网址生效，现在先用 GitHub 的备用地址。下面是三角洲、MC 两个站点以及 MC 后台的全部入口。</p>
     <div class="quick">
       <a href="https://dfclub.github.io/delta/index.html" target="_blank" rel="noopener">三角洲 · GitHub 备用<span class="q-note">全天可用</span></a>
       <a href="https://mcserver.tailaf01bf.ts.net/" target="_blank" rel="noopener">MC · net 备用<span class="q-note">10:00–19:00</span></a>
     </div>
   </header>
+
+  <section class="hub" aria-label="官网地址">
+    <article class="panel panel--hub">
+      <div class="panel-head">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17" stroke-width="1.2"/><path d="M12 3.5c2.6 2.6 2.6 14.4 0 17M12 3.5c-2.6 2.6-2.6 14.4 0 17" stroke-width="1.2" opacity=".7"/></svg>
+        </span>
+        <div>
+          <h2>我们的官网</h2>
+          <p class="sub">就是这个页面 · 托管在 GitHub，电脑关机也能打开</p>
+        </div>
+      </div>
+      <ul class="entries">
+        <li class="entry">
+          <a class="entry-link" href="https://dfclub.eu.org/" target="_blank" rel="noopener">
+            <span class="head"><span class="role">主网址</span><span class="tag tag--wait">审核中</span></span>
+            <span class="url">https://dfclub.eu.org/</span>
+            <span class="note">eu.org 域名审核中，暂时无法访问，具体时间等通知</span>
+          </a>
+          <button class="copy" type="button" data-url="https://dfclub.eu.org/" aria-label="复制官网主网址">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="4" width="11" height="14" rx="1"/><path d="M6 7v12a1 1 0 0 0 1 1h10" opacity=".55"/></svg>
+          </button>
+        </li>
+        <li class="entry">
+          <a class="entry-link" href="https://dfclub.github.io/" target="_blank" rel="noopener">
+            <span class="head"><span class="role">备用</span><span class="tag tag--ok">稳定</span><span class="sig l3" aria-hidden="true"><i></i><i></i><i></i></span></span>
+            <span class="url">https://dfclub.github.io/</span>
+            <span class="note">GitHub 托管，100% 可以访问、非常稳定，现在就用这个</span>
+          </a>
+          <button class="copy" type="button" data-url="https://dfclub.github.io/" aria-label="复制官网备用网址">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="4" width="11" height="14" rx="1"/><path d="M6 7v12a1 1 0 0 0 1 1h10" opacity=".55"/></svg>
+          </button>
+        </li>
+      </ul>
+    </article>
+  </section>
 
   <section class="sites" aria-label="两个站点">
 
@@ -402,7 +442,7 @@ footer{
       <li><span class="n">②</span><span>net 结尾的网址速度慢，仅在 10:00–19:00 期间可以访问。</span></li>
       <li><span class="n">③</span><span>dev 结尾的网址访问极其不稳定，几乎无法访问。</span></li>
       <li><span class="n">④</span><span>GitHub 网址 100% 可以访问、非常稳定；但主网址更短，所以 GitHub 这个只作备用。</span></li>
-      <li><span class="n">⑤</span><span>MC 官网仅在白天可以访问，三角洲官网全天都可以访问。</span></li>
+      <li><span class="n">⑤</span><span>MC 官网仅在白天可以访问，主官网和三角洲官网全天都可以访问。</span></li>
     </ol>
   </section>
 
