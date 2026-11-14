@@ -8,10 +8,10 @@
 
   ★ 加网址只需要改同目录的「网址清单.txt」（一行一条，用 | 分开），不要再手改下面的 <li>：
     三角洲 | 备用 4 | https://例子.com/ | 一句话说明 | ok | 3
-    列依次是：版块（三角洲 / MC / MC后台）、名称、完整网址、备注、状态、信号格
+    列依次是：版块（官网 / 三角洲 / MC / MC后台）、名称、完整网址、备注、状态、信号格
     状态四选一：ok=稳定、limit=限时、bad=极不稳定、wait=审核中；信号格 0–3，3 最稳，写 0 不显示。
 
-  改完保存 → 双击「一键部署官网.bat」：它会按清单重新生成下面标了 LINKS 的三个区块，
+  改完保存 → 双击「一键部署官网.bat」：它会按清单重新生成下面标了 LINKS 的四个区块，
   再自动复制到 官网入口站\index.html、提交、推送，约 30 秒后 https://dfclub.github.io/ 生效。
 
   下面每个 <ul class="entries"> 里的内容由脚本生成（两个 LINKS 注释之间），手改会被下次部署覆盖。
@@ -112,6 +112,7 @@ body{
 .panel{border-left:3px solid var(--acc,var(--paper));padding-left:14px}
 .panel--delta{--acc:var(--delta)}
 .panel--mc{--acc:var(--mc)}
+.panel--hub{--acc:var(--paper)}
 .panel-head{display:flex;gap:10px;align-items:flex-start}
 .panel-head .mark{flex:0 0 auto;color:var(--acc)}
 .panel-head .mark svg{display:block;width:22px;height:22px}
@@ -261,7 +262,7 @@ footer{
   .role{font-size:14px}
 }
 
-/* 桌面（≥768px）：站点两列并排，后台版块横跨整行，和其他版块顶部对齐 */
+/* 桌面（≥768px）：站点两列并排，每两个版块一行（官网+三角洲、MC+后台） */
 @media (min-width:768px){
   .wrap{padding:44px 28px 64px}
   .hero{padding-bottom:32px}
@@ -270,7 +271,6 @@ footer{
   .quick{flex-direction:row;flex-wrap:wrap;gap:10px}
   .quick a{width:auto;justify-content:flex-start;gap:10px}
   .sites{grid-template-columns:1fr 1fr;gap:34px 40px;margin-top:30px}
-  .panel--admin{grid-column:1/-1}
   .panel h2{font-size:26px}
   .panel-head .mark svg{width:26px;height:26px}
   .panel{padding-left:16px}
@@ -293,7 +293,7 @@ footer{
   <!-- 页头：大标题 + 一句说明 + 两个最常用的快捷入口 -->
   <header class="hero">
     <h1>我们的官网</h1>
-    <p class="lede">三角洲与《我的世界》两个站点的统一入口，外加 MC 官网后台。两个主网址都在审核中，现在能打开的是下面标着「稳定」或「限时」的那几个。</p>
+    <p class="lede">三角洲与《我的世界》两个站点的统一入口，外加本站主域名和 MC 官网后台。三个主网址都在 eu.org 审核中，现在能打开的是下面标着「稳定」或「限时」的那几个。</p>
     <!-- 快捷入口：只放「现在就能打开」的两个地址，点击直接新窗口打开 -->
     <div class="quick">
       <a href="https://dfclub.github.io/delta/index.html" target="_blank" rel="noopener">三角洲 · GitHub 备用<span class="q-note">全天可用</span></a>
@@ -301,8 +301,45 @@ footer{
     </div>
   </header>
 
-  <!-- 三个版块：手机上依次单列排下；桌面上三角洲与 MC 并排，后台横跨整行 -->
+  <!-- 四个版块：手机上依次单列排下；桌面上每两个版块一行（官网+三角洲、MC+后台） -->
   <section class="sites" aria-label="全部站点入口">
+
+    <!-- ===== 我们的官网（就是本页） ===== -->
+    <article class="panel panel--hub">
+      <div class="panel-head">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.2"/><path d="M3.8 12h16.4M12 3.8c2.6 2.4 2.6 13.8 0 16.4M12 3.8c-2.6 2.4-2.6 13.8 0 16.4" stroke-width="1.2" opacity=".65"/></svg>
+        </span>
+        <div>
+          <h2>我们的官网</h2>
+          <p class="sub">就是本页 · 主域名审核中，备用常开</p>
+        </div>
+      </div>
+      <ul class="entries">
+        <!-- LINKS:HUB:start · 本区块由 网址清单.txt 生成，手改会被覆盖 -->
+        <li class="entry">
+          <a class="entry-link" href="https://dfclub.eu.org/" target="_blank" rel="noopener">
+            <span class="head"><span class="role">主网址</span><span class="tag tag--wait">审核中</span></span>
+            <span class="url">https://dfclub.eu.org/</span>
+            <span class="note">本站主域名，eu.org 审核中，暂时无法访问</span>
+          </a>
+          <button class="copy" type="button" data-url="https://dfclub.eu.org/" aria-label="复制官网主网址">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="4" width="11" height="14" rx="1"/><path d="M6 7v12a1 1 0 0 0 1 1h10" opacity=".55"/></svg>
+          </button>
+        </li>
+        <li class="entry">
+          <a class="entry-link" href="https://dfclub.github.io/" target="_blank" rel="noopener">
+            <span class="head"><span class="role">备用</span><span class="tag tag--ok">稳定</span><span class="sig l3" aria-hidden="true"><i></i><i></i><i></i></span></span>
+            <span class="url">https://dfclub.github.io/</span>
+            <span class="note">GitHub 托管，就是现在这一页，100% 可访问、非常稳定</span>
+          </a>
+          <button class="copy" type="button" data-url="https://dfclub.github.io/" aria-label="复制官网备用">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="4" width="11" height="14" rx="1"/><path d="M6 7v12a1 1 0 0 0 1 1h10" opacity=".55"/></svg>
+          </button>
+        </li>
+        <!-- LINKS:HUB:end -->
+      </ul>
+    </article>
 
     <!-- ===== 三角洲 ===== -->
     <article class="panel panel--delta">
@@ -438,7 +475,7 @@ footer{
     </article>
   </section>
 
-  <!-- 访问须知 ①–⑤：内容和用户给的原话一字不改 -->
+  <!-- 访问须知 ①–⑥：内容和用户给的原话一字不改，只有 ⑥ 是为本站补的 -->
   <section class="notes" aria-label="访问须知">
     <h2>访问前请先看这几条</h2>
     <ol>
@@ -447,6 +484,7 @@ footer{
       <li><span class="n">③</span><span>dev 结尾的网址访问极其不稳定，几乎无法访问。</span></li>
       <li><span class="n">④</span><span>GitHub 网址 100% 可以访问、非常稳定；但主网址更短，所以 GitHub 这个只作备用。</span></li>
       <li><span class="n">⑤</span><span>MC 官网仅在白天可以访问，三角洲官网全天都可以访问。</span></li>
+      <li><span class="n">⑥</span><span>本站（GitHub 版 https://dfclub.github.io/）全天都可以访问；主域名审核通过后，以主域名为准。</span></li>
     </ol>
   </section>
 
