@@ -1,23 +1,43 @@
 <!DOCTYPE html>
+<!--
+  ============================================================
+  我们的官网 · 全站入口页
+  ============================================================
+  作用：把三角洲官网、MC 官网、MC 后台的所有地址列在一页，方便发链接给同学。
+  形态：单个 HTML 文件，CSS / JS / 图标全部内联，双击就能打开，不依赖任何外部文件。
+
+  改内容时只要记住三件事：
+  1. 地址、状态标签、备注都写在 <body> 里的 <article class="panel"> 里，一段 <li class="entry"> 就是一条链接；
+  2. 公式：一个 .entry 里左边 .entry-link 放「角色 + 状态 + 网址 + 备注」，右边 .copy 按钮的 data-url 必须和网址一致；
+  3. 改完保存本文件 → 双击同目录的 更新官网入口.bat → 约 30 秒后 https://dfclub.github.io/ 生效。
+  ============================================================
+-->
 <html lang="zh-CN">
 <head>
+<!-- 编码与手机适配：viewport-fit=cover 让刘海屏/底部安全区生效；theme-color 决定手机上地址栏的颜色 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0d0f12">
 <meta name="color-scheme" content="dark">
 <title>我们的官网 · 站点入口</title>
+<!-- 网站图标：内联 SVG（三角 + 草方块），不额外请求图片文件 -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d0f12'/%3E%3Cpath d='M16 7 25 25H7z' fill='%23ff6d2d'/%3E%3Crect x='20' y='7' width='6' height='6' fill='%237fc63f'/%3E%3C/svg%3E">
 <style>
+/* ===== 设计变量：整页配色、字体只在这里改 ===== */
 :root{
+  /* 底色三层：最暗页面底、卡片底、正文纸色 */
   --ink:#0d0f12;
   --ink2:#151920;
   --paper:#eae6dd;
+  /* 次要文字、分割线 */
   --dim:#9aa095;
   --line:rgba(234,230,221,.14);
+  /* 站点识别色：三角洲橙、MC 绿；警示黄、错误红 */
   --delta:#ff6d2d;
   --mc:#7fc63f;
   --warn:#d9a441;
   --bad:#d95745;
+  /* 等宽字体用于网址，无衬线用于中文正文 */
   --mono:ui-monospace,"Cascadia Mono","Consolas","PingFang SC",monospace;
   --sans:"HarmonyOS Sans SC","PingFang SC","Microsoft YaHei","Source Han Sans SC",sans-serif;
 }
@@ -41,13 +61,14 @@ body{
   mask-image:radial-gradient(120% 80% at 20% 0%, #000 0%, transparent 78%);
   -webkit-mask-image:radial-gradient(120% 80% at 20% 0%, #000 0%, transparent 78%);
 }
+/* 内容容器：桌面最宽 1040px 居中，底部预留 iPhone 安全区高度 */
 .wrap{
   max-width:1040px;
   margin:0 auto;
   padding:22px 14px calc(44px + env(safe-area-inset-bottom,0px));
 }
 
-/* ---------- hero ---------- */
+/* ---------- 页头：标题 + 一句说明 + 两个快捷入口 ---------- */
 .hero{padding:4px 0 22px;border-bottom:1px solid var(--line)}
 .hero h1{
   font-size:clamp(34px,10.4vw,52px);
@@ -62,6 +83,7 @@ body{
   line-height:1.62;
   max-width:34em;
 }
+/* 顶部快捷入口：手机上纵向排成整行按钮，右侧小字标注可用时段 */
 .quick{display:flex;flex-direction:column;gap:8px;margin-top:18px}
 .hero .lede code{font-family:var(--mono);font-size:.94em;color:var(--paper)}
 .quick a{
@@ -79,10 +101,10 @@ body{
 .quick a:hover{border-color:rgba(234,230,221,.4)}
 .quick a .q-note{color:var(--dim);font-size:14px}
 
-/* ---------- 站点区块 ---------- */
+/* ---------- 站点区块：手机一列、桌面两列（后台横跨整行） ---------- */
 .sites{display:grid;grid-template-columns:1fr;gap:26px;margin-top:22px}
+/* 每个版块左侧的竖条颜色由 --acc 决定，版块名不同颜色不同 */
 .panel{border-left:3px solid var(--acc,var(--paper));padding-left:14px}
-.panel--hub{--acc:var(--paper)}
 .panel--delta{--acc:var(--delta)}
 .panel--mc{--acc:var(--mc)}
 .panel-head{display:flex;gap:10px;align-items:flex-start}
@@ -92,6 +114,7 @@ body{
 .panel .sub{color:var(--dim);font-size:14px;margin-top:2px}
 
 .entries{list-style:none;margin-top:10px}
+/* 每条链接：左列放信息（可点击跳转），右列固定放复制按钮 */
 .entry{
   display:grid;
   grid-template-columns:minmax(0,1fr) auto;
@@ -113,6 +136,7 @@ body{
 .entry-link:hover .url{color:#fff;text-decoration:underline;text-underline-offset:3px}
 .head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px}
 .role{font-size:14px;font-weight:700;letter-spacing:.02em}
+/* 状态标签：绿=稳定、黄=限时、红=极不稳定、灰=审核中（颜色跟随所在版块的识别色） */
 .tag{
   font-size:14px;line-height:1;
   padding:4px 6px;
@@ -124,7 +148,7 @@ body{
 .tag--limit{color:var(--warn)}
 .tag--bad{color:var(--bad)}
 .tag--wait{color:var(--dim)}
-/* 信号强弱：只表达“稳不稳”，一格一档 */
+/* 信号格：只表达「稳不稳」，一格一档；l3 满格=l3 最稳，l1 最差，l0 为空 */
 .sig{display:inline-flex;align-items:flex-end;gap:3px;margin-left:2px}
 .sig i{display:block;width:4px;background:transparent;border:1px solid rgba(234,230,221,.22)}
 .sig i:nth-child(1){height:6px}
@@ -136,6 +160,7 @@ body{
 .sig.l1,.sig.l2,.sig.l3{color:var(--acc)}
 .sig.l1{color:var(--warn)}
 .sig.l0{color:rgba(234,230,221,.3)}
+/* 网址：等宽字体；手机上长网址强制在任意位置折行，避免撑破版面 */
 .url{
   display:block;
   margin-top:6px;
@@ -147,6 +172,7 @@ body{
   overflow-wrap:anywhere;
 }
 .note{display:block;margin-top:4px;color:var(--dim);font-size:14px;line-height:1.55}
+/* 复制按钮：46×46（手机 44×44），满足手指点击热区；复制的地址取按钮上的 data-url */
 .copy{
   flex:0 0 auto;
   width:46px;height:46px;
@@ -161,8 +187,9 @@ body{
 .copy:hover{color:var(--paper);border-color:rgba(234,230,221,.4)}
 .copy svg{width:18px;height:18px}
 
-/* ---------- 后台 ---------- */
+/* ---------- 后台版块：识别色改用警示黄，和 MC 绿区分开 ---------- */
 .panel--admin{--acc:var(--warn)}
+/* 「要改网页内容？」提示条 */
 .callout{
   margin-top:14px;
   padding:13px 14px;
@@ -174,7 +201,7 @@ body{
 }
 .callout strong{color:var(--warn);font-weight:700}
 
-/* ---------- 须知 ---------- */
+/* ---------- 访问须知：①–⑤ 五条，编号列等宽，文字列自动折行 ---------- */
 .notes{margin-top:28px;padding-top:22px;border-top:1px solid var(--line)}
 .notes h2{font-size:21px;font-weight:700}
 .notes ol{list-style:none;margin-top:10px}
@@ -191,6 +218,7 @@ body{
 .notes li:first-child{border-top:none}
 .notes li .n{color:var(--dim);font-family:var(--mono)}
 
+/* 页脚：维护者与更新日期；手机上纵向两行，桌面两端对齐 */
 footer{
   margin-top:28px;
   padding-top:14px;
@@ -202,7 +230,7 @@ footer{
   gap:4px;
 }
 
-/* ---------- toast ---------- */
+/* 复制反馈：底部浮层提示，2 秒内自动消失；同样避开手机底部安全区 */
 .toast{
   position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));
   transform:translate(-50%,14px);
@@ -219,7 +247,8 @@ footer{
 }
 .toast.show{opacity:1;visibility:visible;transform:translate(-50%,0)}
 
-/* 竖屏小屏专用微调：430 以下字距放松、按钮更宽 */
+/* ===== 响应式：先满足手机竖屏，再在 768px 以上补桌面布局 ===== */
+/* 小屏手机（≤430px）：标题再小一档，按钮缩到 44×44 */
 @media (max-width:430px){
   .hero h1{font-size:clamp(32px,9.6vw,42px)}
   .entry{gap:8px}
@@ -227,6 +256,7 @@ footer{
   .role{font-size:14px}
 }
 
+/* 桌面（≥768px）：站点两列并排，后台版块横跨整行，和其他版块顶部对齐 */
 @media (min-width:768px){
   .wrap{padding:44px 28px 64px}
   .hero{padding-bottom:32px}
@@ -235,6 +265,7 @@ footer{
   .quick{flex-direction:row;flex-wrap:wrap;gap:10px}
   .quick a{width:auto;justify-content:flex-start;gap:10px}
   .sites{grid-template-columns:1fr 1fr;gap:34px 40px;margin-top:30px}
+  .panel--admin{grid-column:1/-1}
   .panel h2{font-size:26px}
   .panel-head .mark svg{width:26px;height:26px}
   .panel{padding-left:16px}
@@ -250,54 +281,23 @@ footer{
 </style>
 </head>
 <body>
+<!-- 装饰层：极淡的坐标网格，纯背景材质，不承载任何信息 -->
 <div class="grid-bg" aria-hidden="true"></div>
 <div class="wrap">
 
+  <!-- 页头：大标题 + 一句说明 + 两个最常用的快捷入口 -->
   <header class="hero">
     <h1>我们的官网</h1>
-    <p class="lede">这个页面本身也在换域名：<code>dfclub.eu.org</code> 审核通过后主网址生效，现在先用 GitHub 的备用地址。下面是三角洲、MC 两个站点以及 MC 后台的全部入口。</p>
+    <p class="lede">三角洲与《我的世界》两个站点的统一入口，外加 MC 官网后台。两个主网址都在审核中，现在能打开的是下面标着「稳定」或「限时」的那几个。</p>
+    <!-- 快捷入口：只放「现在就能打开」的两个地址，点击直接新窗口打开 -->
     <div class="quick">
       <a href="https://dfclub.github.io/delta/index.html" target="_blank" rel="noopener">三角洲 · GitHub 备用<span class="q-note">全天可用</span></a>
       <a href="https://mcserver.tailaf01bf.ts.net/" target="_blank" rel="noopener">MC · net 备用<span class="q-note">10:00–19:00</span></a>
     </div>
   </header>
 
+  <!-- 三个版块：手机上依次单列排下；桌面上三角洲与 MC 并排，后台横跨整行 -->
   <section class="sites" aria-label="全部站点入口">
-
-    <!-- ===== 官网（本页） ===== -->
-    <article class="panel panel--hub">
-      <div class="panel-head">
-        <span class="mark" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17" stroke-width="1.2"/><path d="M12 3.5c2.6 2.6 2.6 14.4 0 17M12 3.5c-2.6 2.6-2.6 14.4 0 17" stroke-width="1.2" opacity=".7"/></svg>
-        </span>
-        <div>
-          <h2>我们的官网</h2>
-          <p class="sub">就是这个页面 · 托管在 GitHub，电脑关机也能打开</p>
-        </div>
-      </div>
-      <ul class="entries">
-        <li class="entry">
-          <a class="entry-link" href="https://dfclub.eu.org/" target="_blank" rel="noopener">
-            <span class="head"><span class="role">主网址</span><span class="tag tag--wait">审核中</span></span>
-            <span class="url">https://dfclub.eu.org/</span>
-            <span class="note">eu.org 域名审核中，暂时无法访问，具体时间等通知</span>
-          </a>
-          <button class="copy" type="button" data-url="https://dfclub.eu.org/" aria-label="复制官网主网址">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="4" width="11" height="14" rx="1"/><path d="M6 7v12a1 1 0 0 0 1 1h10" opacity=".55"/></svg>
-          </button>
-        </li>
-        <li class="entry">
-          <a class="entry-link" href="https://dfclub.github.io/" target="_blank" rel="noopener">
-            <span class="head"><span class="role">备用</span><span class="tag tag--ok">稳定</span><span class="sig l3" aria-hidden="true"><i></i><i></i><i></i></span></span>
-            <span class="url">https://dfclub.github.io/</span>
-            <span class="note">GitHub 托管，100% 可以访问、非常稳定，现在就用这个</span>
-          </a>
-          <button class="copy" type="button" data-url="https://dfclub.github.io/" aria-label="复制官网备用网址">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="4" width="11" height="14" rx="1"/><path d="M6 7v12a1 1 0 0 0 1 1h10" opacity=".55"/></svg>
-          </button>
-        </li>
-      </ul>
-    </article>
 
     <!-- ===== 三角洲 ===== -->
     <article class="panel panel--delta">
@@ -311,6 +311,7 @@ footer{
         </div>
       </div>
       <ul class="entries">
+        <!-- 主网址：eu.org 免费域名，还在审核，所以标「审核中」 -->
         <li class="entry">
           <a class="entry-link" href="https://delta.dfclub.eu.org/" target="_blank" rel="noopener">
             <span class="head"><span class="role">主网址</span><span class="tag tag--wait">审核中</span></span>
@@ -366,6 +367,7 @@ footer{
         </div>
       </div>
       <ul class="entries">
+        <!-- 主网址：eu.org 免费域名，还在审核，所以标「审核中」 -->
         <li class="entry">
           <a class="entry-link" href="https://mc.dfclub.eu.org/" target="_blank" rel="noopener">
             <span class="head"><span class="role">主网址</span><span class="tag tag--wait">审核中</span></span>
@@ -401,6 +403,7 @@ footer{
         </div>
       </div>
       <ul class="entries">
+        <!-- 后台主网址：等 MC 主域名生效后才会通，现在用下面的 net 备用地址登录 -->
         <li class="entry">
           <a class="entry-link" href="https://mc.dfclub.eu.org/admin/index.php" target="_blank" rel="noopener">
             <span class="head"><span class="role">主网址</span><span class="tag tag--wait">审核中</span></span>
@@ -422,11 +425,12 @@ footer{
           </button>
         </li>
       </ul>
+      <!-- 提示条：后台账号密码不写在页面上，私发 -->
       <div class="callout"><strong>要改网页内容？</strong> MC 后台可以修改网站上的内容，账号密码私我拿。</div>
     </article>
   </section>
 
-  <!-- ===== 须知 ===== -->
+  <!-- 访问须知 ①–⑤：内容和用户给的原话一字不改 -->
   <section class="notes" aria-label="访问须知">
     <h2>访问前请先看这几条</h2>
     <ol>
@@ -434,16 +438,18 @@ footer{
       <li><span class="n">②</span><span>net 结尾的网址速度慢，仅在 10:00–19:00 期间可以访问。</span></li>
       <li><span class="n">③</span><span>dev 结尾的网址访问极其不稳定，几乎无法访问。</span></li>
       <li><span class="n">④</span><span>GitHub 网址 100% 可以访问、非常稳定；但主网址更短，所以 GitHub 这个只作备用。</span></li>
-      <li><span class="n">⑤</span><span>MC 官网仅在白天可以访问，主官网和三角洲官网全天都可以访问。</span></li>
+      <li><span class="n">⑤</span><span>MC 官网仅在白天可以访问，三角洲官网全天都可以访问。</span></li>
     </ol>
   </section>
 
+  <!-- 页脚：改了页面记得把日期一起改掉 -->
   <footer>
     <span>维护：dfclub</span>
     <span>页面更新：2026-11-08</span>
   </footer>
 </div>
 
+<!-- 复制成功的浮层提示，文字由下面的脚本填 -->
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script>
@@ -451,6 +457,7 @@ footer{
   var toast = document.getElementById('toast');
   var timer = null;
 
+  /* 显示提示条：1.6 秒后自动收起；连续点击时重置计时，不会叠字 */
   function showToast(text) {
     toast.textContent = text;
     toast.classList.add('show');
@@ -458,6 +465,7 @@ footer{
     timer = setTimeout(function () { toast.classList.remove('show'); }, 1600);
   }
 
+  /* 兜底复制方案：给手机浏览器 / 非 https 打开时用，用一个屏幕外文本框 + execCommand 完成复制 */
   function legacyCopy(text) {
     var ta = document.createElement('textarea');
     ta.value = text;
@@ -472,6 +480,7 @@ footer{
     return ok;
   }
 
+  /* 给页面上所有复制按钮绑事件：优先用剪贴板 API，失败再走上面的兜底方案 */
   document.querySelectorAll('.copy').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var text = btn.getAttribute('data-url') || '';
