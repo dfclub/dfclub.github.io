@@ -10,6 +10,7 @@
     三角洲 | 备用 4 | https://例子.com/ | 一句话说明 | ok | 3
     列依次是：版块（要跟 版块表.txt 里登记的名字一致）、名称、完整网址、备注、状态、信号格
     状态四选一：ok=稳定、limit=限时、bad=极不稳定、wait=审核中；信号格 0–3，3 最稳，写 0 不显示。
+    网址留空的行 = 纯文字卡片（团队成员名单用），这时写四列就够：团队成员 | 名字 |  | 分工说明
 
   ★ 要加一个新版块：双击「添加版块.bat」，按提示填名字、强调色、图标、位置就行。
     它会自动往本页插入区块骨架、往 版块表.txt 登记、往 网址清单.txt 补第一条网址，然后重新生成页面。
@@ -133,6 +134,10 @@ body{
   border-top:1px solid var(--line);
 }
 .entry:first-child{border-top:none;padding-top:4px}
+/* 纯文字条目：团队成员这类没有网址的，只占一列，名字当头、分工当小字 */
+.entry--plain{grid-template-columns:minmax(0,1fr)}
+.entry--plain .entry-link{cursor:default}
+.name{display:block;color:#fff;font-size:17px;font-weight:700;letter-spacing:.01em;line-height:1.4}
 .entry-link{
   display:block;min-width:0;
   text-decoration:none;color:inherit;
@@ -296,7 +301,7 @@ footer{
   <!-- 页头：大标题 + 一句说明 + 两个最常用的快捷入口 -->
   <header class="hero">
     <h1>我们的官网</h1>
-    <p class="lede">三角洲与《我的世界》两个站点的统一入口，外加本站主域名和 MC 官网后台。四个主网址都在 eu.org 审核中，现在能打开的是下面标着「稳定」或「限时」的那几个。</p>
+    <p class="lede">三角洲与《我的世界》两个站点的统一入口，外加本站主域名、MC 官网后台和团队成员名单。四个主网址都在 eu.org 审核中，现在能打开的是下面标着「稳定」或「限时」的那几个。</p>
     <!-- 快捷入口：只放「现在就能打开」的两个地址，点击直接新窗口打开 -->
     <div class="quick">
       <a href="https://dfclub.github.io/delta/index.html" target="_blank" rel="noopener">三角洲 · GitHub 备用<span class="q-note">全天可用</span></a>
@@ -486,6 +491,29 @@ footer{
       <!-- 提示条：后台账号密码不写在页面上，私发 -->
       <div class="callout"><strong>要改网页内容？</strong> MC 后台可以修改网站上的内容，账号密码私我拿。</div>
     </article>
+
+    <!-- ===== 团队成员 ===== -->
+    <article class="panel panel--people">
+      <div class="panel-head">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3.2"/><path d="M12 3.4v3M12 17.6v3M3.4 12h3M17.6 12h3" stroke-width="1.4" opacity=".75"/></svg>
+        </span>
+        <div>
+          <h2>团队成员</h2>
+          <p class="sub">名单 · 名字与分工</p>
+        </div>
+      </div>
+      <ul class="entries">
+        <!-- LINKS:PEOPLE:start · 本区块由 网址清单.txt 生成，手改会被覆盖 -->
+        <li class="entry entry--plain">
+          <span class="entry-link">
+            <span class="note">这一栏还没有内容，往 网址清单.txt 加一行就会出现。</span>
+          </span>
+        </li>
+        <!-- LINKS:PEOPLE:end -->
+      </ul>
+    </article>
+
   </section>
 
   <!-- 访问须知 ①–⑥：内容和用户给的原话一字不改，只有 ⑥ 是为本站补的 -->
