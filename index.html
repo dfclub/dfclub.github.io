@@ -6,10 +6,15 @@
   作用：把三角洲官网、MC 官网、MC 后台的所有地址列在一页，方便发链接给同学。
   形态：单个 HTML 文件，CSS / JS / 图标全部内联，双击就能打开，不依赖任何外部文件。
 
-  改内容时只要记住三件事：
-  1. 地址、状态标签、备注都写在 <body> 里的 <article class="panel"> 里，一段 <li class="entry"> 就是一条链接；
-  2. 公式：一个 .entry 里左边 .entry-link 放「角色 + 状态 + 网址 + 备注」，右边 .copy 按钮的 data-url 必须和网址一致；
-  3. 改完保存本文件 → 双击同目录的 更新官网入口.bat → 约 30 秒后 https://dfclub.github.io/ 生效。
+  ★ 加网址只需要改同目录的「网址清单.txt」（一行一条，用 | 分开），不要再手改下面的 <li>：
+    三角洲 | 备用 4 | https://例子.com/ | 一句话说明 | ok | 3
+    列依次是：版块（三角洲 / MC / MC后台）、名称、完整网址、备注、状态、信号格
+    状态四选一：ok=稳定、limit=限时、bad=极不稳定、wait=审核中；信号格 0–3，3 最稳，写 0 不显示。
+
+  改完保存 → 双击「一键部署官网.bat」：它会按清单重新生成下面标了 LINKS 的三个区块，
+  再自动复制到 官网入口站\index.html、提交、推送，约 30 秒后 https://dfclub.github.io/ 生效。
+
+  下面每个 <ul class="entries"> 里的内容由脚本生成（两个 LINKS 注释之间），手改会被下次部署覆盖。
   ============================================================
 -->
 <html lang="zh-CN">
@@ -311,7 +316,7 @@ footer{
         </div>
       </div>
       <ul class="entries">
-        <!-- 主网址：eu.org 免费域名，还在审核，所以标「审核中」 -->
+        <!-- LINKS:DELTA:start · 本区块由 网址清单.txt 生成，手改会被覆盖 -->
         <li class="entry">
           <a class="entry-link" href="https://delta.dfclub.eu.org/" target="_blank" rel="noopener">
             <span class="head"><span class="role">主网址</span><span class="tag tag--wait">审核中</span></span>
@@ -352,6 +357,7 @@ footer{
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="4" width="11" height="14" rx="1"/><path d="M6 7v12a1 1 0 0 0 1 1h10" opacity=".55"/></svg>
           </button>
         </li>
+        <!-- LINKS:DELTA:end -->
       </ul>
     </article>
 
@@ -367,7 +373,7 @@ footer{
         </div>
       </div>
       <ul class="entries">
-        <!-- 主网址：eu.org 免费域名，还在审核，所以标「审核中」 -->
+        <!-- LINKS:MC:start · 本区块由 网址清单.txt 生成，手改会被覆盖 -->
         <li class="entry">
           <a class="entry-link" href="https://mc.dfclub.eu.org/" target="_blank" rel="noopener">
             <span class="head"><span class="role">主网址</span><span class="tag tag--wait">审核中</span></span>
@@ -384,10 +390,11 @@ footer{
             <span class="url">https://mcserver.tailaf01bf.ts.net/</span>
             <span class="note">net 结尾，速度慢，仅在白天可以访问</span>
           </a>
-          <button class="copy" type="button" data-url="https://mcserver.tailaf01bf.ts.net/" aria-label="复制 MC 备用网址">
+          <button class="copy" type="button" data-url="https://mcserver.tailaf01bf.ts.net/" aria-label="复制 MC 备用">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="4" width="11" height="14" rx="1"/><path d="M6 7v12a1 1 0 0 0 1 1h10" opacity=".55"/></svg>
           </button>
         </li>
+        <!-- LINKS:MC:end -->
       </ul>
     </article>
 
@@ -403,7 +410,7 @@ footer{
         </div>
       </div>
       <ul class="entries">
-        <!-- 后台主网址：等 MC 主域名生效后才会通，现在用下面的 net 备用地址登录 -->
+        <!-- LINKS:ADMIN:start · 本区块由 网址清单.txt 生成，手改会被覆盖 -->
         <li class="entry">
           <a class="entry-link" href="https://mc.dfclub.eu.org/admin/index.php" target="_blank" rel="noopener">
             <span class="head"><span class="role">主网址</span><span class="tag tag--wait">审核中</span></span>
@@ -420,10 +427,11 @@ footer{
             <span class="url">https://mcserver.tailaf01bf.ts.net/admin/index.php</span>
             <span class="note">net 结尾，速度慢，仅在白天可以访问</span>
           </a>
-          <button class="copy" type="button" data-url="https://mcserver.tailaf01bf.ts.net/admin/index.php" aria-label="复制后台备用网址">
+          <button class="copy" type="button" data-url="https://mcserver.tailaf01bf.ts.net/admin/index.php" aria-label="复制后台备用">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="4" width="11" height="14" rx="1"/><path d="M6 7v12a1 1 0 0 0 1 1h10" opacity=".55"/></svg>
           </button>
         </li>
+        <!-- LINKS:ADMIN:end -->
       </ul>
       <!-- 提示条：后台账号密码不写在页面上，私发 -->
       <div class="callout"><strong>要改网页内容？</strong> MC 后台可以修改网站上的内容，账号密码私我拿。</div>
@@ -445,7 +453,7 @@ footer{
   <!-- 页脚：改了页面记得把日期一起改掉 -->
   <footer>
     <span>维护：dfclub</span>
-    <span>页面更新：2026-11-08</span>
+    <span>页面更新：2026-11-14</span>
   </footer>
 </div>
 
