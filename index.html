@@ -281,6 +281,8 @@ footer{
   .sites{grid-template-columns:1fr 1fr;gap:34px 40px;margin-top:30px}
   /* 团队成员版块单独占一整行，不和别的版块挤半列 */
   .panel--people{grid-column:1/-1}
+  /* GitHub 仓库同样占满整行，避免只剩半列留白 */
+  .panel--github{grid-column:1/-1}
   .panel h2{font-size:26px}
   .panel-head .mark svg{width:26px;height:26px}
   .panel{padding-left:16px}
@@ -492,6 +494,44 @@ footer{
       </ul>
       <!-- 提示条：后台账号密码不写在页面上，私发 -->
       <div class="callout"><strong>要改网页内容？</strong> MC 后台可以修改网站上的内容，账号密码私我拿。</div>
+    </article>
+
+
+    <!-- ===== GitHub 仓库 ===== -->
+    <article class="panel panel--github">
+      <div class="panel-head">
+        <span class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="16" height="16"/><rect x="9" y="9" width="3" height="3" stroke-width="1.2" opacity=".7"/><rect x="14" y="14" width="3" height="3" stroke-width="1.2" opacity=".7"/></svg>
+        </span>
+        <div>
+          <h2>GitHub 仓库</h2>
+          <p class="sub">源码与提交记录</p>
+        </div>
+      </div>
+      <ul class="entries">
+        <!-- LINKS:GITHUB:start · 本区块由 网址清单.txt 生成，手改会被覆盖 -->
+        <li class="entry">
+          <a class="entry-link" href="https://github.com/dfclub/dfclub.github.io" target="_blank" rel="noopener">
+            <span class="head"><span class="role">dfclub.github.io</span><span class="tag tag--ok">稳定</span><span class="sig l3" aria-hidden="true"><i></i><i></i><i></i></span></span>
+            <span class="url">https://github.com/dfclub/dfclub.github.io</span>
+            <span class="note">主官网这个页面的源码仓库</span>
+          </a>
+          <button class="copy" type="button" data-url="https://github.com/dfclub/dfclub.github.io" aria-label="复制GitHub 仓库dfclub.github.io">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="4" width="11" height="14" rx="1"/><path d="M6 7v12a1 1 0 0 0 1 1h10" opacity=".55"/></svg>
+          </button>
+        </li>
+        <li class="entry">
+          <a class="entry-link" href="https://github.com/dfclub/delta" target="_blank" rel="noopener">
+            <span class="head"><span class="role">dfclub/delta</span><span class="tag tag--ok">稳定</span><span class="sig l3" aria-hidden="true"><i></i><i></i><i></i></span></span>
+            <span class="url">https://github.com/dfclub/delta</span>
+            <span class="note">三角洲整站源码与画廊图片</span>
+          </a>
+          <button class="copy" type="button" data-url="https://github.com/dfclub/delta" aria-label="复制GitHub 仓库dfclub/delta">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="4" width="11" height="14" rx="1"/><path d="M6 7v12a1 1 0 0 0 1 1h10" opacity=".55"/></svg>
+          </button>
+        </li>
+        <!-- LINKS:GITHUB:end -->
+      </ul>
     </article>
 
     <!-- ===== 团队成员 ===== -->
