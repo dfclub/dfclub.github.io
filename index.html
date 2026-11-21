@@ -110,7 +110,7 @@ body{
 .quick a:hover{border-color:rgba(234,230,221,.4)}
 .quick a .q-note{color:var(--dim);font-size:14px}
 
-/* ---------- 站点区块：手机一列、桌面两列（后台横跨整行） ---------- */
+/* ---------- 站点区块：手机一列、桌面两列（团队成员横跨整行） ---------- */
 .sites{display:grid;grid-template-columns:1fr;gap:26px;margin-top:22px}
 /* 每个版块左侧的竖条颜色由 --acc 决定，版块名不同颜色不同 */
 .panel{border-left:3px solid var(--acc,var(--paper));padding-left:14px}
@@ -279,6 +279,8 @@ footer{
   .quick{flex-direction:row;flex-wrap:wrap;gap:10px}
   .quick a{width:auto;justify-content:flex-start;gap:10px}
   .sites{grid-template-columns:1fr 1fr;gap:34px 40px;margin-top:30px}
+  /* 团队成员版块单独占一整行，不和别的版块挤半列 */
+  .panel--people{grid-column:1/-1}
   .panel h2{font-size:26px}
   .panel-head .mark svg{width:26px;height:26px}
   .panel{padding-left:16px}
