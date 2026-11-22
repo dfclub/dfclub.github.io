@@ -18,6 +18,9 @@
   改完保存 → 双击「一键部署官网.bat」：它会按清单重新生成下面标了 LINKS 的各区块，
   再自动复制到 官网入口站\index.html、提交、推送，约 30 秒后 https://dfclub.github.io/ 生效。
 
+  ★ 本站另有更新日志页 log.html：由提交记录自动生成，部署时会一起重建，
+    在 GitHub 网页上手动提交的改动也会按时间收进去，不要手改这个页面。
+
   下面每个 <ul class="entries"> 里的内容由脚本生成（两个 LINKS 注释之间），手改会被下次部署覆盖。
   ============================================================
 -->
@@ -326,6 +329,12 @@ footer{
   flex-direction:column;
   gap:4px;
 }
+/* 页脚链接：更新日志入口，细下划线，悬停变亮 */
+footer a{
+  color:var(--dim);text-decoration:none;align-self:flex-start;
+  border-bottom:1px solid var(--line);
+}
+footer a:hover{color:var(--paper);border-color:rgba(234,230,221,.4)}
 
 /* 复制反馈：底部浮层提示，2 秒内自动消失；同样避开手机底部安全区 */
 .toast{
@@ -746,10 +755,11 @@ footer{
     </div>
   </section>
 
-  <!-- 页脚：改了页面记得把日期一起改掉 -->
+  <!-- 页脚：改了页面记得把日期一起改掉；右侧链到更新日志页 -->
   <footer>
     <span>维护：dfclub</span>
     <span>页面更新：2026-11-22</span>
+    <a href="./log.html">更新日志 →</a>
   </footer>
 </div>
 

@@ -1,0 +1,44 @@
+# 每次有人往 main 推送（包括在 GitHub 网页上手动提交），自动按提交记录重建更新日志页。
+# 生成的提交带 [skip log]，因此不会再触发下一次运行，不会死循环。
+name: 更新日志页
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-log
+  cancel-in-progress: false
+
+jobs:
+  build-log:
+    if: ${{ !contains(github.event.head_commit.message, '[skip log]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: 取出仓库（需要完整历史）
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 准备 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 重建 log.html
+        run: node tools/build-log.mjs
+
+      - name: 提交日志页
+        run: |
+          if git diff --quiet -- log.html; then
+            echo "日志页没有变化，跳过提交"
+            exit 0
+          fi
+          git config user.name "dfclub"
+          git config user.email "2365699927@qq.com"
+          git add log.html
+          git commit -m "docs: 更新日志页 [skip log]"
+          git push

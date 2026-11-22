@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  我们的官网 · 更新日志
+  ============================================================
+  本页由 tools\build-log.mjs 根据仓库的提交记录自动生成，不要手改：
+  每次提交（包括在 GitHub 网页上手动提交的）都会变成这里的一条记录，
+  时间取提交时间，精确到分钟；标题和正文优先取 tools\log-meta.json 里写好的文案，
+  没有登记的提交自动用提交说明和改动行数代替。
+
+  重新生成：在仓库根目录执行  node tools\build-log.mjs
+  一键部署脚本会在提交后自动生成并再提交一次。
+  ============================================================
+-->
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0d0f12">
+<meta name="color-scheme" content="dark">
+<title>更新日志 · 我们的官网</title>
+<!-- 网站图标：与入口页同一枚（三角 + 草方块） -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230d0f12'/%3E%3Cpath d='M16 7 25 25H7z' fill='%23ff6d2d'/%3E%3Crect x='20' y='7' width='6' height='6' fill='%237fc63f'/%3E%3C/svg%3E">
+<style>
+/* ===== 设计变量：与入口页保持一致，改配色只改这里 ===== */
+:root{
+  --ink:#0d0f12;
+  --ink2:#151920;
+  --paper:#eae6dd;
+  --dim:#9aa095;
+  --line:rgba(234,230,221,.14);
+  --delta:#ff6d2d;
+  --mc:#7fc63f;
+  --warn:#d9a441;
+  --bad:#d95745;
+  --mono:ui-monospace,"Cascadia Mono","Consolas","PingFang SC",monospace;
+  --sans:"HarmonyOS Sans SC","PingFang SC","Microsoft YaHei","Source Han Sans SC",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--ink);color:var(--paper);font-family:var(--sans);
+  font-size:16px;line-height:1.6;overflow-x:hidden;
+}
+/* 背景网格：与入口页同一套材质 */
+.grid-bg{
+  position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background-image:
+    linear-gradient(to right, rgba(234,230,221,.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(234,230,221,.045) 1px, transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(120% 80% at 20% 0%, #000 0%, transparent 78%);
+  -webkit-mask-image:radial-gradient(120% 80% at 20% 0%, #000 0%, transparent 78%);
+}
+.wrap{max-width:900px;margin:0 auto;padding:22px 14px calc(44px + env(safe-area-inset-bottom,0px))}
+
+/* ---------- 页头 ---------- */
+.hero{padding:4px 0 20px;border-bottom:1px solid var(--line)}
+.back{
+  display:inline-flex;align-items:center;gap:6px;
+   min-height:44px;padding:0 2px;
+  color:var(--dim);text-decoration:none;font-family:var(--mono);font-size:13px;
+  letter-spacing:.02em;
+}
+.back:hover{color:var(--paper)}
+.hero h1{
+  font-size:clamp(30px,8.6vw,44px);line-height:1.06;letter-spacing:-.025em;font-weight:800;
+}
+.hero .lede{margin-top:10px;color:var(--dim);font-size:15px;line-height:1.62;max-width:34em}
+/* 三个数字：条数 / 跨度 / 最近更新 */
+.stats{
+  display:grid;grid-template-columns:1fr;gap:1px;
+  margin-top:18px;padding:0;list-style:none;
+  border:1px solid var(--line);background:var(--line);
+}
+.stats li{
+  display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  padding:10px 12px;background:var(--ink2);
+}
+.stats b{font-family:var(--mono);font-size:15px;font-weight:600;letter-spacing:.01em}
+.stats span{color:var(--dim);font-size:13px}
+
+/* ---------- 日志列表 ---------- */
+.log{margin-top:8px}
+/* 一条记录：左边时间，右边标题与正文 */
+.entry{
+  display:grid;grid-template-columns:1fr;gap:4px;
+  padding:18px 0 18px 12px;
+  border-bottom:1px solid var(--line);
+  border-left:2px solid transparent;
+  transition:border-color .16s ease,background-color .16s ease;
+}
+.entry:hover{border-left-color:var(--delta);background:rgba(234,230,221,.026)}
+.entry time{
+  font-family:var(--mono);font-size:13px;color:var(--dim);letter-spacing:.02em;
+}
+.entry h2{
+  font-size:17px;font-weight:700;line-height:1.42;letter-spacing:-.005em;
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px;
+}
+.entry p{margin-top:6px;color:var(--dim);font-size:15px;line-height:1.68;max-width:56em}
+/* 「手动提交」标记：灰底细框，不喧宾夺主 */
+.badge{
+  font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.06em;
+  color:var(--paper);padding:1px 6px;border:1px solid var(--line);border-radius:2px;
+  background:rgba(234,230,221,.05);text-transform:uppercase;
+}
+.hash{
+  display:inline-block;margin-top:6px;
+  font-family:var(--mono);font-size:12px;color:rgba(234,230,221,.34);letter-spacing:.04em;
+}
+
+/* ---------- 页脚 ---------- */
+footer{
+  display:flex;flex-direction:column;gap:6px;
+  margin-top:26px;padding-top:14px;border-top:1px solid var(--line);
+  color:var(--dim);font-size:13px;font-family:var(--mono);
+}
+footer a{color:var(--dim);text-decoration:none;border-bottom:1px solid var(--line);align-self:flex-start}
+footer a:hover{color:var(--paper);border-color:rgba(234,230,221,.4)}
+
+/* ---------- 响应式：手机单列，桌面时间列固定宽度 ---------- */
+@media (min-width:720px){
+  .stats{grid-template-columns:repeat(3,1fr)}
+  .entry{grid-template-columns:132px minmax(0,1fr);gap:18px;padding:20px 0 20px 14px;align-items:start}
+  .entry time{padding-top:3px}
+  footer{flex-direction:row;justify-content:space-between;align-items:center;gap:16px}
+  footer a{align-self:auto}
+}
+@media (max-width:430px){
+  .hero h1{font-size:30px}
+  .entry h2{font-size:16px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+}
+</style>
+</head>
+<body>
+<div class="grid-bg" aria-hidden="true"></div>
+<div class="wrap">
+
+  <header class="hero">
+    <a class="back" href="./index.html">← 返回入口页</a>
+    <h1>更新日志</h1>
+    <p class="lede">本站每一次改动都记在这里，时间精确到分钟。自动化部署和在 GitHub 网页上手动提交的改动，都会按提交记录收进来。</p>
+    <ul class="stats">
+      <li><b>{{COUNT}}</b><span>条记录</span></li>
+      <li><b>{{SPAN}}</b><span>时间跨度</span></li>
+      <li><b>{{UPDATED}}</b><span>最近更新</span></li>
+    </ul>
+  </header>
+
+  <main class="log" aria-label="更改记录">
+{{ENTRIES}}
+  </main>
+
+  <footer>
+    <span>维护：dfclub</span>
+    <span>本页由提交记录自动生成 · {{UPDATED}}</span>
+    <a href="./index.html">返回入口页</a>
+  </footer>
+</div>
+</body>
+</html>
