@@ -232,7 +232,7 @@ body{
 .notes li:first-child{border-top:none}
 .notes li .n{color:var(--dim);font-family:var(--mono)}
 
-/* ---------- 意见反馈：纯静态页没有服务器，反馈直接发到邮箱，不经过任何第三方服务 ---------- */
+/* ---------- 意见反馈：纯静态页没有服务器，靠 FormSubmit 把内容转发到邮箱 ---------- */
 .feedback{
   margin-top:28px;
   padding:18px 16px;
@@ -678,17 +678,26 @@ footer{
     </ol>
   </section>
 
-  <!-- 意见反馈：页面是纯静态的，没有服务器收数据，所以用邮件把内容发过来，不用注册任何账号 -->
+  <!-- 意见反馈：页面是纯静态的，没有服务器收数据，所以交给 FormSubmit 转发到邮箱，不用任何账号 -->
   <section class="feedback" aria-label="意见反馈">
     <h2>意见反馈</h2>
-    <p class="sub">网址打不开、想加个链接、手机上哪儿别扭 —— 写在这儿，一键带到我这边</p>
+    <p class="sub">网址打不开、想加个链接、手机上哪儿别扭 —— 写在这儿直接提交，不用登录任何账号</p>
     <label for="fb-text"><span>想说的话</span></label>
     <textarea id="fb-text" rows="4" placeholder="例如：三角洲备用 2 打不开了；想加一个 B 站主页；手机上看字太小"></textarea>
     <div class="fb-actions">
-      <button class="fb-btn fb-btn--primary" id="fb-mail" type="button">发送到我的邮箱</button>
+      <button class="fb-btn fb-btn--primary" id="fb-send" type="button">直接提交</button>
       <button class="fb-btn" id="fb-copy" type="button">复制内容，自己发我</button>
     </div>
-    <p class="fb-hint">点「发送」会调起你手机或电脑上的邮件程序，把内容发到 <a href="mailto:2365699927@qq.com">2365699927@qq.com</a>，我这边收到邮件会弹提醒，邮件本身也一直留着当记录。没有邮件程序就点「复制内容」，粘贴到 QQ 或微信发我。</p>
+    <p class="fb-hint">提交后内容会转发到我的邮箱 guaidao1412_1996@163.com，电脑上会弹邮件提醒，反馈也一直留在邮箱里。不想用这条路就点「复制内容」，粘贴到 QQ 或微信发我。</p>
+    <!-- 兜底表单：脚本被拦或网络异常时，用普通表单 POST 把内容送出去 -->
+    <form id="fb-form" action="https://formsubmit.co/guaidao1412_1996@163.com" method="POST" hidden>
+      <input type="hidden" name="_subject" value="【官网反馈】">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="内容" value="">
+      <input type="hidden" name="页面" value="">
+      <input type="hidden" name="时间" value="">
+    </form>
   </section>
 
   <!-- 页脚：改了页面记得把日期一起改掉 -->
@@ -749,7 +758,7 @@ footer{
 </script>
 
 <script>
-/* 意见反馈：把写下的内容交给本机邮件程序发出去（或复制走），不经过任何第三方服务器 */
+/* 意见反馈：把写下的内容交给 FormSubmit 转发到邮箱（或复制走）；FormSubmit 只做转发，不要求注册 */
 (function () {
   var box = document.getElementById('fb-text');
   var toast = document.getElementById('toast');
@@ -794,15 +803,60 @@ footer{
     return ok;
   }
 
-  /* 发送：调起本机邮件程序，正文里带上来源页与时间；不需要任何账号 */
-  document.getElementById('fb-mail').addEventListener('click', function () {
+  /* 发送：交给 FormSubmit 转发到邮箱（不用登录）；脚本被拦时退回普通表单提交 */
+  var sendBtn = document.getElementById('fb-send');
+  var fallbackForm = document.getElementById('fb-form');
+  var ENDPOINT = 'https://formsubmit.co/ajax/guaidao1412_1996@163.com';
+
+  /* 时间戳：写进邮件里，方便回查是哪天提的 */
+  function stamp() {
+    var d = new Date();
+    var p = function (n) { return String(n).length < 2 ? '0' + n : String(n); };
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+  }
+
+  /* 提交失败时的兜底：把值填进隐藏表单，走一次普通 POST */
+  function fallbackSubmit() {
+    fallbackForm.querySelector('[name=内容]').value = box.value.trim();
+    fallbackForm.querySelector('[name=页面]').value = location.href;
+    fallbackForm.querySelector('[name=时间]').value = stamp();
+    fallbackForm.submit();
+  }
+
+  sendBtn.addEventListener('click', function () {
     if (!ensureText()) return;
-    var subject = '【官网反馈】' + box.value.trim().replace(/\s+/g, ' ').slice(0, 24);
-    var url = 'mailto:2365699927@qq.com'
-      + '?subject=' + encodeURIComponent(subject)
-      + '&body=' + encodeURIComponent(fullText());
-    window.location.href = url;
-    tip('正在打开邮件程序');
+    if (sendBtn.disabled) return;              /* 防连点重复提交 */
+    sendBtn.disabled = true;
+    tip('正在提交…');
+
+    var payload = {
+      '内容': box.value.trim(),
+      '_subject': '【官网反馈】' + box.value.trim().replace(/\s+/g, ' ').slice(0, 24),
+      '_captcha': 'false',
+      '_template': 'table',
+      '页面': location.href,
+      '时间': stamp()
+    };
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (res) {
+      return res.json();
+    }).then(function (data) {
+      sendBtn.disabled = false;
+      if (String(data.success) === 'true') {
+        box.value = '';
+        tip('已提交，我会收到邮件提醒');
+      } else {
+        tip('没成功：' + String(data.message || '稍后再试').slice(0, 40));
+      }
+    }).catch(function () {
+      sendBtn.disabled = false;
+      tip('网络不通，换用普通表单发送');
+      fallbackSubmit();
+    });
   });
 
   /* 复制：适合不想公开、想私聊发过去的场景 */
