@@ -232,46 +232,85 @@ body{
 .notes li:first-child{border-top:none}
 .notes li .n{color:var(--dim);font-family:var(--mono)}
 
-/* ---------- 意见反馈：纯静态页没有服务器，靠 FormSubmit 把内容转发到邮箱 ---------- */
-.feedback{
-  margin-top:28px;
-  padding:18px 16px;
-  background:var(--ink2);
-  border:1px solid var(--line);
-  border-left:3px solid var(--paper);
-}
+/* ---------- 意见反馈：版式沿用我的世界官网的「联系我们」，靠 FormSubmit 把内容转发到邮箱 ---------- */
+.feedback{margin-top:28px}
 .feedback h2{font-size:19px;font-weight:700}
 .feedback .sub{color:var(--dim);font-size:14px;margin-top:3px;line-height:1.5}
-.feedback label{display:block;margin-top:14px}
-.feedback label span{display:block;color:var(--dim);font-size:14px;margin-bottom:6px}
-.feedback textarea{
-  width:100%;
-  min-height:96px;
-  padding:11px 12px;
-  background:var(--ink);
-  color:var(--paper);
+.fb-card{
+  margin-top:14px;
+  display:grid;
+  gap:22px;
+  padding:20px 18px;
+  background:rgba(255,255,255,.04);
   border:1px solid var(--line);
-  border-radius:2px;
-  font:inherit;
-  font-size:16px;
-  line-height:1.6;
-  resize:vertical;
+  border-radius:20px;
 }
-.feedback textarea:focus{outline:2px solid rgba(234,230,221,.35);outline-offset:1px}
-.fb-actions{display:flex;flex-direction:column;gap:10px;margin-top:12px}
-.fb-btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  min-height:44px;padding:12px 16px;
-  background:transparent;color:var(--paper);
-  border:1px solid rgba(234,230,221,.28);
-  border-radius:2px;
-  font:inherit;font-size:15px;cursor:pointer;
-  transition:border-color .15s,background .15s,color .15s;
+.fb-rules h3{display:flex;align-items:center;gap:9px;font-size:16px;margin:0 0 14px}
+.fb-rules h3 svg{color:var(--delta);flex:none}
+.fb-rules-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px}
+.fb-rules-list li{display:flex;gap:10px;align-items:flex-start;color:#cfcabf;font-size:14px;line-height:1.6}
+.fb-rule-num{
+  display:flex;align-items:center;justify-content:center;flex:none;
+  width:20px;height:20px;margin-top:2px;border-radius:50%;
+  background:rgba(255,109,45,.16);color:var(--delta);font-size:12px;font-weight:700;
 }
-.fb-btn:hover{border-color:rgba(234,230,221,.55)}
-.fb-btn--primary{background:var(--paper);color:var(--ink);border-color:var(--paper);font-weight:700}
-.fb-btn--primary:hover{background:#f3efe6;color:var(--ink)}
-.fb-hint{color:var(--dim);font-size:13px;line-height:1.6;margin-top:10px}
+.fb-rules-list strong{color:var(--paper);font-weight:600}
+.fb-note{margin-top:18px;padding:11px 12px;background:rgba(217,87,69,.12);border-left:3px solid var(--bad);border-radius:4px}
+.fb-note p{margin:0;color:#f0a79b;font-size:13px;line-height:1.5}
+.fb-form{display:flex;flex-direction:column;gap:14px}
+.fb-group{display:flex;flex-direction:column;gap:6px}
+.fb-group label{color:var(--dim);font-size:13px}
+.fb-group input,.fb-group select,.fb-group textarea{
+  background:var(--ink);border:1px solid var(--line);border-radius:10px;
+  padding:11px 13px;color:var(--paper);font:inherit;font-size:16px;
+}
+.fb-group input:focus,.fb-group select:focus,.fb-group textarea:focus{
+  outline:none;border-color:var(--delta);box-shadow:0 0 0 3px rgba(255,109,45,.18);
+}
+.fb-group select option{background:var(--ink2);color:var(--paper)}
+.fb-editor{background:var(--ink);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.fb-editor:focus-within{border-color:var(--delta);box-shadow:0 0 0 3px rgba(255,109,45,.18)}
+.fb-editor textarea{
+  display:block;width:100%;box-sizing:border-box;min-height:110px;
+  padding:11px 13px;border:none;background:transparent;box-shadow:none;
+  color:var(--paper);font:inherit;font-size:16px;line-height:1.6;resize:vertical;
+}
+.fb-editor textarea:focus{outline:none;box-shadow:none}
+.fb-preview{display:none;flex-wrap:wrap;gap:6px;padding:0 10px}
+.fb-preview.active{display:flex}
+.fb-preview-item{position:relative;width:54px;height:54px;border-radius:8px;overflow:hidden;border:1px solid var(--line)}
+.fb-preview-item img{width:100%;height:100%;object-fit:cover;display:block}
+.fb-preview-item button{
+  position:absolute;top:2px;right:2px;width:18px;height:18px;padding:0;
+  border:none;border-radius:50%;background:rgba(13,15,18,.82);color:var(--paper);
+  font:inherit;font-size:12px;line-height:1;cursor:pointer;
+}
+.fb-editor-bar{display:flex;align-items:center;gap:10px;padding:9px 10px;border-top:1px solid rgba(234,230,221,.08)}
+.fb-attach{
+  display:inline-flex;align-items:center;gap:6px;min-height:32px;padding:6px 11px;
+  background:rgba(234,230,221,.05);border:1px solid rgba(234,230,221,.18);border-radius:8px;
+  color:var(--paper);font:inherit;font-size:13px;cursor:pointer;
+}
+.fb-attach:hover{border-color:var(--delta);color:var(--delta)}
+.fb-hint{font-size:12px;color:var(--dim)}
+.fb-file{display:none}
+.fb-submit{
+  margin-top:2px;display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:13px 22px;border:none;border-radius:10px;
+  background:var(--delta);color:#1a0d06;font:inherit;font-size:16px;font-weight:700;
+  cursor:pointer;transition:background .15s;
+}
+.fb-submit:hover{background:#ff8248}
+.fb-submit:disabled{opacity:.6;cursor:default}
+.fb-copy{
+  align-self:flex-start;padding:2px 0;border:none;background:none;
+  color:var(--dim);font:inherit;font-size:13px;text-decoration:underline;cursor:pointer;
+}
+.fb-tip{min-height:1.4em;margin:0;font-size:13px;color:var(--delta);line-height:1.5}
+@media(min-width:768px){
+  .fb-card{grid-template-columns:1fr 1fr;gap:32px;padding:26px}
+  .fb-rules{border-right:1px solid var(--line);padding-right:24px}
+}
 
 /* 页脚：维护者与更新日期；手机上纵向两行，桌面两端对齐 */
 footer{
@@ -678,26 +717,60 @@ footer{
     </ol>
   </section>
 
-  <!-- 意见反馈：页面是纯静态的，没有服务器收数据，所以交给 FormSubmit 转发到两个邮箱（163 与 QQ），不用任何账号 -->
+  <!-- 意见反馈：版式沿用我的世界官网的「联系我们」，内容交给 FormSubmit 转发到两个邮箱（163 与 QQ），不用任何账号 -->
   <section class="feedback" aria-label="意见反馈">
     <h2>意见反馈</h2>
-    <p class="sub">网址打不开、想加个链接、手机上哪儿别扭 —— 写在这儿直接提交，不用登录任何账号</p>
-    <label for="fb-text"><span>想说的话</span></label>
-    <textarea id="fb-text" rows="4" placeholder="例如：三角洲备用 2 打不开了；想加一个 B 站主页；手机上看字太小"></textarea>
-    <div class="fb-actions">
-      <button class="fb-btn fb-btn--primary" id="fb-send" type="button">直接提交</button>
-      <button class="fb-btn" id="fb-copy" type="button">复制内容，自己发我</button>
+    <p class="sub">网址打不开、想加个链接、手机上哪儿别扭 —— 填完直接提交，会同时发到两个邮箱，不用登录任何账号</p>
+    <div class="fb-card">
+      <div class="fb-rules">
+        <h3>
+          <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          填写指南
+        </h3>
+        <ul class="fb-rules-list">
+          <li><span class="fb-rule-num">1</span><span>请务必填写真实有效的<strong>邮箱地址</strong>，以便接收回复。</span></li>
+          <li><span class="fb-rule-num">2</span><span>标题请简明扼要，如“<strong>[Bug反馈]</strong> 官网入口打不开”。</span></li>
+          <li><span class="fb-rule-num">3</span><span>详细描述中请包含<strong>出现问题的页面、设备、复现步骤</strong>。</span></li>
+          <li><span class="fb-rule-num">4</span><span>页面异常请附上<strong>截图</strong>，方便定位问题。</span></li>
+          <li><span class="fb-rule-num">5</span><span>处理时间通常为<strong>1-3个工作日</strong>，请耐心等待。</span></li>
+        </ul>
+        <div class="fb-note">
+          <p>注：恶意骚扰或发送垃圾邮件将被永久拉黑。</p>
+        </div>
+      </div>
+
+      <form class="fb-form" id="fb-form">
+        <div class="fb-group">
+          <label for="fb-name">您的昵称</label>
+          <input id="fb-name" name="name" type="text" placeholder="怎么称呼你" required>
+        </div>
+        <div class="fb-group">
+          <label for="fb-email">联系邮箱</label>
+          <input id="fb-email" name="email" type="email" placeholder="用于接收回复的邮箱地址" required>
+        </div>
+        <div class="fb-group">
+          <label for="fb-subject">主题</label>
+          <select id="fb-subject" name="subject">
+            <option value="bug">Bug反馈</option>
+          </select>
+        </div>
+        <div class="fb-group">
+          <label for="fb-text">详细内容</label>
+          <div class="fb-editor">
+            <textarea id="fb-text" rows="5" placeholder="哪个页面、什么设备、怎么复现，写清楚一点" required></textarea>
+            <div class="fb-preview" id="fb-preview"></div>
+            <div class="fb-editor-bar">
+              <input class="fb-file" type="file" id="fb-file" accept="image/*" multiple>
+              <button class="fb-attach" id="fb-attach" type="button">添加图片</button>
+              <span class="fb-hint" id="fb-hint">最多3张，合计≤10MB</span>
+            </div>
+          </div>
+        </div>
+        <button class="fb-submit" id="fb-send" type="submit"><span>直接提交</span></button>
+        <button class="fb-copy" id="fb-copy" type="button">复制内容，自己发我</button>
+        <p class="fb-tip" id="fb-tip" role="status" aria-live="polite"></p>
+      </form>
     </div>
-    <p class="fb-hint">提交后内容会同时转发到 guaidao1412_1996@163.com 和 2365699927@qq.com 两个邮箱，两处都留底。不想用这条路就点「复制内容」，粘贴到 QQ 或微信发我。</p>
-    <!-- 兜底表单：脚本被拦或网络异常时，用普通表单 POST 把内容送出去 -->
-    <form id="fb-form" action="https://formsubmit.co/guaidao1412_1996@163.com" method="POST" hidden>
-      <input type="hidden" name="_subject" value="【官网反馈】">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="内容" value="">
-      <input type="hidden" name="页面" value="">
-      <input type="hidden" name="时间" value="">
-    </form>
   </section>
 
   <!-- 页脚：改了页面记得把日期一起改掉 -->
@@ -760,35 +833,59 @@ footer{
 <script>
 /* 意见反馈：把写下的内容交给 FormSubmit 转发到邮箱（或复制走）；FormSubmit 只做转发，不要求注册 */
 (function () {
+  var form = document.getElementById('fb-form');
   var box = document.getElementById('fb-text');
+  var tipEl = document.getElementById('fb-tip');
   var toast = document.getElementById('toast');
   var timer = null;
-  if (!box) return;
+  if (!form || !box) return;
+
+  var nameEl = document.getElementById('fb-name');
+  var emailEl = document.getElementById('fb-email');
+  var subjectEl = document.getElementById('fb-subject');
+  var fileEl = document.getElementById('fb-file');
+  var attachBtn = document.getElementById('fb-attach');
+  var previewEl = document.getElementById('fb-preview');
+  var hintEl = document.getElementById('fb-hint');
+  var sendBtn = document.getElementById('fb-send');
+  var copyBtn = document.getElementById('fb-copy');
+
+  /* 发送去向：FormSubmit 免费转发，访客不用登录；两个邮箱各发一份 */
+  var ENDPOINTS = [
+    'https://formsubmit.co/ajax/guaidao1412_1996@163.com',
+    'https://formsubmit.co/ajax/2365699927@qq.com'
+  ];
+  var MAX_FILES = 3;
+  var MAX_SIZE = 5 * 1024 * 1024;
+  var MAX_TOTAL = 10 * 1024 * 1024;
+  var files = [];
 
   function tip(text) {
-    toast.textContent = text;
-    toast.classList.add('show');
-    if (timer) clearTimeout(timer);
-    timer = setTimeout(function () { toast.classList.remove('show'); }, 2000);
+    if (tipEl) tipEl.textContent = text || '';
+    if (toast && text) {
+      toast.textContent = text;
+      toast.classList.add('show');
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(function () { toast.classList.remove('show'); }, 2000);
+    }
   }
 
-  /* 拼出发送正文：用户写的话 + 来源页 + 本机时间，方便回查是哪一版页面 */
+  function stamp() {
+    var d = new Date();
+    var p = function (n) { return String(n).length < 2 ? '0' + n : String(n); };
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+  }
+
   function fullText() {
-    var when = new Date();
-    var pad = function (n) { return String(n).length < 2 ? '0' + n : String(n); };
-    var stamp = when.getFullYear() + '-' + pad(when.getMonth() + 1) + '-' + pad(when.getDate()) + ' ' + pad(when.getHours()) + ':' + pad(when.getMinutes());
-    return box.value.trim() + '\n\n—— 来自官网入口页 ' + location.href + '，' + stamp;
+    var nick = nameEl ? nameEl.value.trim() : '';
+    var mail = emailEl ? emailEl.value.trim() : '';
+    var head = [];
+    if (nick) head.push('昵称：' + nick);
+    if (mail) head.push('邮箱：' + mail);
+    return (head.length ? head.join(' / ') + '\n' : '') +
+      box.value.trim() + '\n\n—— 来自官网入口页 ' + location.href + '，' + stamp();
   }
 
-  /* 空内容不发送，避免同学点了一下什么都没写 */
-  function ensureText() {
-    if (box.value.trim()) return true;
-    tip('先写两句再发');
-    box.focus();
-    return false;
-  }
-
-  /* 兜底复制：老浏览器或非 https 打开时用，和上方复制按钮同一套办法 */
   function legacyCopy(text) {
     var ta = document.createElement('textarea');
     ta.value = text;
@@ -803,56 +900,78 @@ footer{
     return ok;
   }
 
-  /* 发送：交给 FormSubmit 转发到两个邮箱（不用登录，各发一份）；脚本被拦时退回普通表单提交 */
-  var sendBtn = document.getElementById('fb-send');
-  var fallbackForm = document.getElementById('fb-form');
-  var ENDPOINTS = [
-    'https://formsubmit.co/ajax/guaidao1412_1996@163.com',
-    'https://formsubmit.co/ajax/2365699927@qq.com'
-  ];
-
-  /* 时间戳：写进邮件里，方便回查是哪天提的 */
-  function stamp() {
-    var d = new Date();
-    var p = function (n) { return String(n).length < 2 ? '0' + n : String(n); };
-    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+  /* 图片：最多 3 张、单张 ≤5MB、合计 ≤10MB（FormSubmit 一次提交的附件上限） */
+  function addFiles(list) {
+    for (var i = 0; i < list.length; i++) {
+      var f = list[i];
+      if (files.length >= MAX_FILES) break;
+      if (!f.type || f.type.indexOf('image/') !== 0) continue;
+      if (f.size > MAX_SIZE) { tip('“' + f.name + '”超过5MB，没加上'); continue; }
+      var total = f.size;
+      for (var j = 0; j < files.length; j++) total += files[j].size;
+      if (total > MAX_TOTAL) { tip('图片合计超过10MB，“' + f.name + '”没加上'); continue; }
+      files.push(f);
+    }
+    renderPreview();
   }
 
-  /* 提交失败时的兜底：把值填进隐藏表单，走一次普通 POST */
-  function fallbackSubmit() {
-    fallbackForm.querySelector('[name=内容]').value = box.value.trim();
-    fallbackForm.querySelector('[name=页面]').value = location.href;
-    fallbackForm.querySelector('[name=时间]').value = stamp();
-    fallbackForm.submit();
+  function renderPreview() {
+    if (!previewEl) return;
+    previewEl.innerHTML = '';
+    files.forEach(function (f, i) {
+      var item = document.createElement('div');
+      item.className = 'fb-preview-item';
+      var img = document.createElement('img');
+      img.src = URL.createObjectURL(f);
+      img.alt = f.name;
+      var del = document.createElement('button');
+      del.type = 'button';
+      del.textContent = '×';
+      del.setAttribute('aria-label', '移除图片');
+      del.addEventListener('click', function () {
+        files.splice(i, 1);
+        renderPreview();
+      });
+      item.appendChild(img);
+      item.appendChild(del);
+      previewEl.appendChild(item);
+    });
+    previewEl.classList.toggle('active', files.length > 0);
+    if (hintEl) hintEl.textContent = files.length > 0 ? files.length + '/3 张' : '最多3张，合计≤10MB';
   }
 
-  sendBtn.addEventListener('click', function () {
-    if (!ensureText()) return;
-    if (sendBtn.disabled) return;              /* 防连点重复提交 */
+  if (attachBtn && fileEl) {
+    attachBtn.addEventListener('click', function () { fileEl.click(); });
+    fileEl.addEventListener('change', function () {
+      addFiles(fileEl.files);
+      fileEl.value = '';
+    });
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!box.value.trim()) { tip('先写两句再提交'); box.focus(); return; }
+    if (sendBtn.disabled) return;
     sendBtn.disabled = true;
     tip('正在提交…');
 
-    var payload = {
-      '内容': box.value.trim(),
-      '_subject': '【官网反馈】' + box.value.trim().replace(/\s+/g, ' ').slice(0, 24),
-      '_captcha': 'false',
-      '_template': 'table',
-      '页面': location.href,
-      '时间': stamp()
-    };
+    var fd = new FormData();
+    fd.append('昵称', nameEl ? nameEl.value.trim() : '');
+    fd.append('联系邮箱', emailEl ? emailEl.value.trim() : '');
+    fd.append('主题', subjectEl && subjectEl.selectedIndex >= 0 ? subjectEl.options[subjectEl.selectedIndex].text : '');
+    fd.append('详细内容', box.value.trim());
+    fd.append('页面', location.href);
+    fd.append('时间', stamp());
+    fd.append('_subject', '【官网反馈】' + box.value.trim().replace(/\s+/g, ' ').slice(0, 24));
+    fd.append('_captcha', 'false');
+    fd.append('_template', 'table');
+    files.forEach(function (f, i) { fd.append('附件' + (i + 1), f, f.name); });
 
     var jobs = ENDPOINTS.map(function (url) {
-      return fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(payload)
-      }).then(function (res) {
-        return res.json();
-      }).then(function (data) {
-        return String(data.success) === 'true';
-      }).catch(function () {
-        return false;
-      });
+      return fetch(url, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
+        .then(function (res) { return res.json(); })
+        .then(function (data) { return String(data.success) === 'true'; })
+        .catch(function () { return false; });
     });
 
     Promise.all(jobs).then(function (results) {
@@ -860,32 +979,36 @@ footer{
       var okCount = 0;
       for (var i = 0; i < results.length; i++) { if (results[i]) okCount++; }
       if (okCount === results.length) {
-        box.value = '';
+        form.reset();
+        files = [];
+        renderPreview();
         tip('已提交，两个邮箱都会收到');
       } else if (okCount > 0) {
-        box.value = '';
+        form.reset();
+        files = [];
+        renderPreview();
         tip('已提交，但有一个邮箱没送达');
       } else {
-        tip('两个邮箱都没送达，换用普通表单发送');
-        fallbackSubmit();
+        tip('两个邮箱都没送达，点下面「复制内容」发我');
       }
     });
   });
 
-  /* 复制：适合不想公开、想私聊发过去的场景 */
-  document.getElementById('fb-copy').addEventListener('click', function () {
-    if (!ensureText()) return;
-    var text = fullText();
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(function () {
-        tip('已复制，粘贴到 QQ 发我');
-      }, function () {
+  if (copyBtn) {
+    copyBtn.addEventListener('click', function () {
+      if (!box.value.trim()) { tip('先写两句再复制'); box.focus(); return; }
+      var text = fullText();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          tip('已复制，粘贴到 QQ 发我');
+        }, function () {
+          tip(legacyCopy(text) ? '已复制，粘贴到 QQ 发我' : '复制失败，请手动选中');
+        });
+      } else {
         tip(legacyCopy(text) ? '已复制，粘贴到 QQ 发我' : '复制失败，请手动选中');
-      });
-    } else {
-      tip(legacyCopy(text) ? '已复制，粘贴到 QQ 发我' : '复制失败，请手动选中');
-    }
-  });
+      }
+    });
+  }
 })();
 </script>
 </body>
