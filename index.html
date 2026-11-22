@@ -847,10 +847,10 @@ footer a:hover{color:#fff;border-color:rgba(255,255,255,.4)}
     </ol>
   </section>
 
-  <!-- 意见反馈：版式沿用我的世界官网的「联系我们」，内容交给 FormSubmit 转发到团队 QQ 邮箱，不用任何账号 -->
+  <!-- 意见反馈：版式沿用我的世界官网的「联系我们」，内容交给 FormSubmit 转发到团队邮箱，不用任何账号 -->
   <section class="feedback" aria-label="意见反馈">
     <h2>意见反馈</h2>
-    <p class="sub">网址打不开、想加个链接、手机上哪儿别扭 —— 填完直接提交，会直接发到团队 QQ 邮箱，不用登录任何账号</p>
+    <p class="sub">网址打不开、想加个链接、手机上哪儿别扭 —— 填完直接提交，会直接发到团队邮箱，不用登录任何账号</p>
     <div class="fb-card">
       <div class="fb-rules">
         <h3>
@@ -981,8 +981,8 @@ footer a:hover{color:#fff;border-color:rgba(255,255,255,.4)}
   var sendBtn = document.getElementById('fb-send');
   var copyBtn = document.getElementById('fb-copy');
 
-  /* 发送去向：FormSubmit 免费转发，访客不用登录；只发 QQ 邮箱一份 */
-  var ENDPOINTS = ['https://formsubmit.co/ajax/2365699927@qq.com'];
+  /* 发送去向：FormSubmit 免费转发，访客不用登录；只发一个邮箱 */
+  var ENDPOINTS = ['https://formsubmit.co/ajax/dfclub20240926@163.com'];
   var MAX_FILES = 3;
   var MAX_SIZE = 5 * 1024 * 1024;
   var MAX_TOTAL = 10 * 1024 * 1024;
@@ -1142,7 +1142,7 @@ footer a:hover{color:#fff;border-color:rgba(255,255,255,.4)}
           form.reset();
           files = [];
           renderPreview();
-          tip('已提交，QQ 邮箱会收到');
+          tip('已提交，邮箱会收到');
         } else {
           tip('没送达，点下面「复制内容」发我');
         }
