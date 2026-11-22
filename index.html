@@ -847,10 +847,10 @@ footer a:hover{color:#fff;border-color:rgba(255,255,255,.4)}
     </ol>
   </section>
 
-  <!-- 意见反馈：版式沿用我的世界官网的「联系我们」，内容交给 FormSubmit 转发到两个邮箱（163 与 QQ），不用任何账号 -->
+  <!-- 意见反馈：版式沿用我的世界官网的「联系我们」，内容交给 FormSubmit 转发到团队 QQ 邮箱，不用任何账号 -->
   <section class="feedback" aria-label="意见反馈">
     <h2>意见反馈</h2>
-    <p class="sub">网址打不开、想加个链接、手机上哪儿别扭 —— 填完直接提交，会同时发到两个邮箱，不用登录任何账号</p>
+    <p class="sub">网址打不开、想加个链接、手机上哪儿别扭 —— 填完直接提交，会直接发到团队 QQ 邮箱，不用登录任何账号</p>
     <div class="fb-card">
       <div class="fb-rules">
         <h3>
@@ -981,11 +981,8 @@ footer a:hover{color:#fff;border-color:rgba(255,255,255,.4)}
   var sendBtn = document.getElementById('fb-send');
   var copyBtn = document.getElementById('fb-copy');
 
-  /* 发送去向：FormSubmit 免费转发，访客不用登录；两个邮箱各发一份 */
-  var ENDPOINTS = [
-    'https://formsubmit.co/ajax/guaidao1412_1996@163.com',
-    'https://formsubmit.co/ajax/2365699927@qq.com'
-  ];
+  /* 发送去向：FormSubmit 免费转发，访客不用登录；只发 QQ 邮箱一份 */
+  var ENDPOINTS = ['https://formsubmit.co/ajax/2365699927@qq.com'];
   var MAX_FILES = 3;
   var MAX_SIZE = 5 * 1024 * 1024;
   var MAX_TOTAL = 10 * 1024 * 1024;
@@ -1137,31 +1134,25 @@ footer a:hover{color:#fff;border-color:rgba(255,255,255,.4)}
     fd.append('_template', 'table');
     files.forEach(function (f, i) { fd.append('附件' + (i + 1), f, f.name); });
 
-    var jobs = ENDPOINTS.map(function (url) {
-      return fetch(url, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
-        .then(function (res) { return res.json(); })
-        .then(function (data) { return String(data.success) === 'true'; })
-        .catch(function () { return false; });
-    });
+    fetch(ENDPOINTS[0], { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        sendBtn.disabled = false;
+        if (String(data.success) === 'true') {
+          form.reset();
+          files = [];
+          renderPreview();
+          tip('已提交，QQ 邮箱会收到');
+        } else {
+          tip('没送达，点下面「复制内容」发我');
+        }
+      })
+      .catch(function () {
+        sendBtn.disabled = false;
+        tip('没送达，点下面「复制内容」发我');
+      });
 
-    Promise.all(jobs).then(function (results) {
-      sendBtn.disabled = false;
-      var okCount = 0;
-      for (var i = 0; i < results.length; i++) { if (results[i]) okCount++; }
-      if (okCount === results.length) {
-        form.reset();
-        files = [];
-        renderPreview();
-        tip('已提交，两个邮箱都会收到');
-      } else if (okCount > 0) {
-        form.reset();
-        files = [];
-        renderPreview();
-        tip('已提交，但有一个邮箱没送达');
-      } else {
-        tip('两个邮箱都没送达，点下面「复制内容」发我');
-      }
-    });
+    
   });
 
   if (copyBtn) {
