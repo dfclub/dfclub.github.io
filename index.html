@@ -232,7 +232,7 @@ body{
 .notes li:first-child{border-top:none}
 .notes li .n{color:var(--dim);font-family:var(--mono)}
 
-/* ---------- 意见反馈：纯静态页没有服务器，反馈直接带到 GitHub 问题页，记录留在仓库里 ---------- */
+/* ---------- 意见反馈：纯静态页没有服务器，反馈直接发到邮箱，不经过任何第三方服务 ---------- */
 .feedback{
   margin-top:28px;
   padding:18px 16px;
@@ -678,17 +678,17 @@ footer{
     </ol>
   </section>
 
-  <!-- 意见反馈：页面是纯静态的，没有服务器收数据，所以反馈直接带到 GitHub 问题页，记录留在仓库里 -->
+  <!-- 意见反馈：页面是纯静态的，没有服务器收数据，所以用邮件把内容发过来，不用注册任何账号 -->
   <section class="feedback" aria-label="意见反馈">
     <h2>意见反馈</h2>
     <p class="sub">网址打不开、想加个链接、手机上哪儿别扭 —— 写在这儿，一键带到我这边</p>
     <label for="fb-text"><span>想说的话</span></label>
     <textarea id="fb-text" rows="4" placeholder="例如：三角洲备用 2 打不开了；想加一个 B 站主页；手机上看字太小"></textarea>
     <div class="fb-actions">
-      <button class="fb-btn fb-btn--primary" id="fb-send" type="button">提交到 GitHub（会通知我）</button>
+      <button class="fb-btn fb-btn--primary" id="fb-mail" type="button">发送到我的邮箱</button>
       <button class="fb-btn" id="fb-copy" type="button">复制内容，自己发我</button>
     </div>
-    <p class="fb-hint">点「提交」会在公开仓库 dfclub/dfclub.github.io 里新建一条 issue，GitHub 随即给我发通知邮件，记录也会一直留在仓库里。不想公开就点「复制」，粘贴到 QQ 或微信发我。</p>
+    <p class="fb-hint">点「发送」会调起你手机或电脑上的邮件程序，把内容发到 <a href="mailto:2365699927@qq.com">2365699927@qq.com</a>，我这边收到邮件会弹提醒，邮件本身也一直留着当记录。没有邮件程序就点「复制内容」，粘贴到 QQ 或微信发我。</p>
   </section>
 
   <!-- 页脚：改了页面记得把日期一起改掉 -->
@@ -749,7 +749,7 @@ footer{
 </script>
 
 <script>
-/* 意见反馈：把写下的内容带到 GitHub 问题页（或复制走），不经过任何第三方服务器 */
+/* 意见反馈：把写下的内容交给本机邮件程序发出去（或复制走），不经过任何第三方服务器 */
 (function () {
   var box = document.getElementById('fb-text');
   var toast = document.getElementById('toast');
@@ -794,15 +794,15 @@ footer{
     return ok;
   }
 
-  /* 提交：新开一个已经填好标题和正文的 issue 页面，点 Create 就入库并触发 GitHub 通知 */
-  document.getElementById('fb-send').addEventListener('click', function () {
+  /* 发送：调起本机邮件程序，正文里带上来源页与时间；不需要任何账号 */
+  document.getElementById('fb-mail').addEventListener('click', function () {
     if (!ensureText()) return;
-    var title = '[意见反馈] ' + box.value.trim().replace(/\s+/g, ' ').slice(0, 24);
-    var url = 'https://github.com/dfclub/dfclub.github.io/issues/new'
-      + '?title=' + encodeURIComponent(title)
+    var subject = '【官网反馈】' + box.value.trim().replace(/\s+/g, ' ').slice(0, 24);
+    var url = 'mailto:2365699927@qq.com'
+      + '?subject=' + encodeURIComponent(subject)
       + '&body=' + encodeURIComponent(fullText());
-    window.open(url, '_blank', 'noopener');
-    tip('已打开问题页，点 Create 就发到了');
+    window.location.href = url;
+    tip('正在打开邮件程序');
   });
 
   /* 复制：适合不想公开、想私聊发过去的场景 */
