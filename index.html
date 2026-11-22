@@ -232,6 +232,47 @@ body{
 .notes li:first-child{border-top:none}
 .notes li .n{color:var(--dim);font-family:var(--mono)}
 
+/* ---------- 意见反馈：纯静态页没有服务器，反馈直接带到 GitHub 问题页，记录留在仓库里 ---------- */
+.feedback{
+  margin-top:28px;
+  padding:18px 16px;
+  background:var(--ink2);
+  border:1px solid var(--line);
+  border-left:3px solid var(--paper);
+}
+.feedback h2{font-size:19px;font-weight:700}
+.feedback .sub{color:var(--dim);font-size:14px;margin-top:3px;line-height:1.5}
+.feedback label{display:block;margin-top:14px}
+.feedback label span{display:block;color:var(--dim);font-size:14px;margin-bottom:6px}
+.feedback textarea{
+  width:100%;
+  min-height:96px;
+  padding:11px 12px;
+  background:var(--ink);
+  color:var(--paper);
+  border:1px solid var(--line);
+  border-radius:2px;
+  font:inherit;
+  font-size:16px;
+  line-height:1.6;
+  resize:vertical;
+}
+.feedback textarea:focus{outline:2px solid rgba(234,230,221,.35);outline-offset:1px}
+.fb-actions{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.fb-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:44px;padding:12px 16px;
+  background:transparent;color:var(--paper);
+  border:1px solid rgba(234,230,221,.28);
+  border-radius:2px;
+  font:inherit;font-size:15px;cursor:pointer;
+  transition:border-color .15s,background .15s,color .15s;
+}
+.fb-btn:hover{border-color:rgba(234,230,221,.55)}
+.fb-btn--primary{background:var(--paper);color:var(--ink);border-color:var(--paper);font-weight:700}
+.fb-btn--primary:hover{background:#f3efe6;color:var(--ink)}
+.fb-hint{color:var(--dim);font-size:13px;line-height:1.6;margin-top:10px}
+
 /* 页脚：维护者与更新日期；手机上纵向两行，桌面两端对齐 */
 footer{
   margin-top:28px;
@@ -281,8 +322,11 @@ footer{
   .sites{grid-template-columns:1fr 1fr;gap:34px 40px;margin-top:30px}
   /* 团队成员版块单独占一整行，不和别的版块挤半列 */
   .panel--people{grid-column:1/-1}
-  /* GitHub 仓库同样占满整行，避免只剩半列留白 */
+  <!-- GitHub 仓库同样占满整行，避免只剩半列留白 -->
   .panel--github{grid-column:1/-1}
+  /* 反馈区的按钮在桌面并排成一行 */
+  .fb-actions{flex-direction:row}
+  .feedback{padding:22px 24px}
   .panel h2{font-size:26px}
   .panel-head .mark svg{width:26px;height:26px}
   .panel{padding-left:16px}
@@ -634,6 +678,19 @@ footer{
     </ol>
   </section>
 
+  <!-- 意见反馈：页面是纯静态的，没有服务器收数据，所以反馈直接带到 GitHub 问题页，记录留在仓库里 -->
+  <section class="feedback" aria-label="意见反馈">
+    <h2>意见反馈</h2>
+    <p class="sub">网址打不开、想加个链接、手机上哪儿别扭 —— 写在这儿，一键带到我这边</p>
+    <label for="fb-text"><span>想说的话</span></label>
+    <textarea id="fb-text" rows="4" placeholder="例如：三角洲备用 2 打不开了；想加一个 B 站主页；手机上看字太小"></textarea>
+    <div class="fb-actions">
+      <button class="fb-btn fb-btn--primary" id="fb-send" type="button">提交到 GitHub（会通知我）</button>
+      <button class="fb-btn" id="fb-copy" type="button">复制内容，自己发我</button>
+    </div>
+    <p class="fb-hint">点「提交」会在公开仓库 dfclub/dfclub.github.io 里新建一条 issue，GitHub 随即给我发通知邮件，记录也会一直留在仓库里。不想公开就点「复制」，粘贴到 QQ 或微信发我。</p>
+  </section>
+
   <!-- 页脚：改了页面记得把日期一起改掉 -->
   <footer>
     <span>维护：dfclub</span>
@@ -687,6 +744,80 @@ footer{
         showToast(legacyCopy(text) ? '链接已复制' : '复制失败，请手动选中地址');
       }
     });
+  });
+})();
+</script>
+
+<script>
+/* 意见反馈：把写下的内容带到 GitHub 问题页（或复制走），不经过任何第三方服务器 */
+(function () {
+  var box = document.getElementById('fb-text');
+  var toast = document.getElementById('toast');
+  var timer = null;
+  if (!box) return;
+
+  function tip(text) {
+    toast.textContent = text;
+    toast.classList.add('show');
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(function () { toast.classList.remove('show'); }, 2000);
+  }
+
+  /* 拼出发送正文：用户写的话 + 来源页 + 本机时间，方便回查是哪一版页面 */
+  function fullText() {
+    var when = new Date();
+    var pad = function (n) { return String(n).length < 2 ? '0' + n : String(n); };
+    var stamp = when.getFullYear() + '-' + pad(when.getMonth() + 1) + '-' + pad(when.getDate()) + ' ' + pad(when.getHours()) + ':' + pad(when.getMinutes());
+    return box.value.trim() + '\n\n—— 来自官网入口页 ' + location.href + '，' + stamp;
+  }
+
+  /* 空内容不发送，避免同学点了一下什么都没写 */
+  function ensureText() {
+    if (box.value.trim()) return true;
+    tip('先写两句再发');
+    box.focus();
+    return false;
+  }
+
+  /* 兜底复制：老浏览器或非 https 打开时用，和上方复制按钮同一套办法 */
+  function legacyCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '-1000px';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  /* 提交：新开一个已经填好标题和正文的 issue 页面，点 Create 就入库并触发 GitHub 通知 */
+  document.getElementById('fb-send').addEventListener('click', function () {
+    if (!ensureText()) return;
+    var title = '[意见反馈] ' + box.value.trim().replace(/\s+/g, ' ').slice(0, 24);
+    var url = 'https://github.com/dfclub/dfclub.github.io/issues/new'
+      + '?title=' + encodeURIComponent(title)
+      + '&body=' + encodeURIComponent(fullText());
+    window.open(url, '_blank', 'noopener');
+    tip('已打开问题页，点 Create 就发到了');
+  });
+
+  /* 复制：适合不想公开、想私聊发过去的场景 */
+  document.getElementById('fb-copy').addEventListener('click', function () {
+    if (!ensureText()) return;
+    var text = fullText();
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        tip('已复制，粘贴到 QQ 发我');
+      }, function () {
+        tip(legacyCopy(text) ? '已复制，粘贴到 QQ 发我' : '复制失败，请手动选中');
+      });
+    } else {
+      tip(legacyCopy(text) ? '已复制，粘贴到 QQ 发我' : '复制失败，请手动选中');
+    }
   });
 })();
 </script>
