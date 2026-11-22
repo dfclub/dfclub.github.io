@@ -49,6 +49,10 @@
   --mc:#7fc63f;
   --warn:#d9a441;
   --bad:#d95745;
+  /* 版块识别色（后加的三种）：GitHub 蓝、应用推荐 青、团队成员 玫红 */
+  --blue:#5e9fd8;
+  --teal:#45b3a8;
+  --rose:#d97d8c;
   /* 等宽字体用于网址，无衬线用于中文正文 */
   --mono:ui-monospace,"Cascadia Mono","Consolas","PingFang SC",monospace;
   --sans:"HarmonyOS Sans SC","PingFang SC","Microsoft YaHei","Source Han Sans SC",sans-serif;
@@ -120,6 +124,9 @@ body{
 .panel--delta{--acc:var(--delta)}
 .panel--mc{--acc:var(--mc)}
 .panel--hub{--acc:var(--paper)}
+.panel--github{--acc:var(--blue)}
+.panel--apps{--acc:var(--teal)}
+.panel--people{--acc:var(--rose)}
 .panel-head{display:flex;gap:10px;align-items:flex-start}
 .panel-head .mark{flex:0 0 auto;color:var(--acc)}
 .panel-head .mark svg{display:block;width:22px;height:22px}
