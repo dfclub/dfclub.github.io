@@ -175,18 +175,27 @@ footer a:hover{color:#fff;border-color:rgba(255,255,255,.4)}
     <h1>更新日志</h1>
     <p class="lede">本站每一次改动都记在这里，时间精确到分钟。自动化部署和在 GitHub 网页上手动提交的改动，都会按提交记录收进来。</p>
     <ul class="stats">
-      <li><b>49</b><span>条记录</span></li>
+      <li><b>50</b><span>条记录</span></li>
       <li><b>2026-11-08 → 2026-11-22</b><span>时间跨度</span></li>
-      <li><b>2026-11-22 20:48</b><span>最近更新</span></li>
+      <li><b>2026-11-22 20:56</b><span>最近更新</span></li>
     </ul>
   </header>
 
   <main class="log" aria-label="更改记录">
       <article class="entry">
+        <time datetime="2026-11-22T20:56">2026-11-22 20:56</time>
+        <div>
+          <h2>访问须知删掉 net 与 dev 两条</h2>
+          <p>「访问前请先看这几条」去掉②「net 结尾的网址速度慢，仅在 10:00–19:00 期间可以访问」和③「dev 结尾的网址访问极其不稳定，几乎无法访问」，剩下四条按①②③④重新编号，文字一字未改：主网址审核中、GitHub 网址稳定但只作备用、MC 与三角洲全天可访问、本站 GitHub 版全天可访问。</p>
+          <span class="hash">提交 a0e48c7</span>
+        </div>
+      </article>
+      <article class="entry">
         <time datetime="2026-11-22T20:48">2026-11-22 20:48</time>
         <div>
-          <h2>入口页更新</h2>
-          <p>改动 1 个文件（+0 / −10 行）：index.html。</p>
+          <h2>删掉 dev 结尾的备用入口
+          <span class="badge">手动提交</span></h2>
+          <p>在 GitHub 网页上手动改的：把「三角洲」版块里 dev 结尾的那条备用链接（https://delta.dfclub.workers.dev/，标着「极不稳定」）整条删掉——备用标签、说明文字、网址和复制按钮一起去掉。这个网址国内几乎打不开，留着只会让人白点一次。</p>
           <span class="hash">提交 c032ce0</span>
         </div>
       </article>
@@ -203,7 +212,7 @@ footer a:hover{color:#fff;border-color:rgba(255,255,255,.4)}
         <div>
           <h2>反馈表单收件邮箱换成 dfclub20240926@163.com
           <span class="badge">手动提交</span></h2>
-          <p>在 GitHub 网页上直接改的：入口页「意见反馈」提交表单的收件地址由 2365699927@qq.com 换成 dfclub20240926@163.com，其余字段、必填校验和提交方式未动。</p>
+          <p>在 GitHub 网页上直接改的，一共五处：反馈表单的收件地址由 2365699927@qq.com 换成 dfclub20240926@163.com；页面上原来写「团队 QQ 邮箱」的地方（区块注释、副标题）改成「团队邮箱」；代码注释「只发 QQ 邮箱一份」改成「只发一个邮箱」；提交成功提示「已提交，QQ 邮箱会收到」改成「已提交，邮箱会收到」。字段、必填与邮箱格式校验都没动。</p>
           <span class="hash">提交 b9a9b0e</span>
         </div>
       </article>
@@ -581,7 +590,7 @@ footer a:hover{color:#fff;border-color:rgba(255,255,255,.4)}
 
   <footer>
     <span>维护：dfclub</span>
-    <span>本页由提交记录自动生成 · 2026-11-22 20:48</span>
+    <span>本页由提交记录自动生成 · 2026-11-22 20:56</span>
     <a href="./index.html">返回入口页</a>
   </footer>
 </div>
