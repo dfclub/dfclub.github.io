@@ -213,17 +213,16 @@ body{
 
 /* ---------- 后台版块：识别色改用警示黄，和 MC 绿区分开 ---------- */
 .panel--admin{--acc:var(--warn)}
-/* 「要改网页内容？」提示条 */
+/* 「要改网站内容？」提示：不再套一层卡片，只用一条上分隔线，颜色跟版块识别色一致 */
 .callout{
-  margin-top:14px;
-  padding:13px 14px;
-  background:var(--ink2);
-  border:1px solid var(--line);
-  border-left:3px solid var(--warn);
-  font-size:15px;
-  line-height:1.6;
+  margin-top:12px;
+  padding:12px 0 0;
+  border-top:1px solid var(--line);
+  font-size:14px;
+  line-height:1.65;
+  color:var(--dim);
 }
-.callout strong{color:var(--warn);font-weight:700}
+.callout strong{color:var(--acc,var(--warn));font-weight:700}
 
 /* ---------- 访问须知：①–⑥ 六条，编号列等宽，文字列自动折行 ---------- */
 .notes{margin-top:28px;padding-top:22px;border-top:1px solid var(--line)}
@@ -567,7 +566,7 @@ footer a:hover{color:var(--paper);border-color:rgba(234,230,221,.4)}
         <!-- LINKS:ADMIN:end -->
       </ul>
       <!-- 提示条：后台账号密码不写在页面上，私发 -->
-      <div class="callout"><strong>要改网页内容？</strong> MC 后台可以修改网站上的内容，账号密码私我拿。</div>
+      <div class="callout"><strong>要改网站上的文字或图片？</strong>打开上面的 MC 后台就能改，登录账号密码私信我们要。</div>
     </article>
 
 
